@@ -1,5 +1,6 @@
 import speech_recognition as sr
 import jokes
+import curiosities
 
 mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"
 sample_rate = 48000
@@ -30,3 +31,6 @@ with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_siz
 
 if text == "suchar":
     jokes.get_jokes()
+
+if text == "ciekawostki":
+    curiosities.get_curiosities()
