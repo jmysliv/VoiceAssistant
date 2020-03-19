@@ -26,4 +26,3 @@ with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_siz
 
     except sr.RequestError as e:
         print("Could not request results from Google Speech Recognition service;{0}".format(e))
-
