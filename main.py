@@ -1,4 +1,5 @@
 import speech_recognition as sr
+import jokes
 
 mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"
 sample_rate = 48000
@@ -17,7 +18,7 @@ with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_siz
     audio = r.listen(source, timeout=2)
 
     try:
-        text = r.recognize_google(audio)
+        text = r.recognize_google(audio, language = "pl-PL")
         print("you said: " + text)
 
 
@@ -26,3 +27,6 @@ with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_siz
 
     except sr.RequestError as e:
         print("Could not request results from Google Speech Recognition service;{0}".format(e))
+
+if text == "suchar":
+    jokes.get_jokes()
