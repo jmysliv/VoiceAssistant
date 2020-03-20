@@ -1,14 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
-# from pymongo import MongoClient
-#
-# client = MongoClient('url_bazy')
-# db = client['jokes']
+import random
 
+jokes = []
 
 def get_jokes():
-    print('scrapping starts')
-    jokes = []
     for page_number in range(1, 30):
         if page_number > 1:
             response = requests.get('https://sucharry.pl/strona/' + str(page_number))
@@ -30,7 +26,12 @@ def get_jokes():
                 pass
 
 
-    for joke in jokes:
-        print(joke)
-        # db.jokes.insert_one(joke)
-    print("done")
+
+def get_random_joke():
+    if len(jokes) == 0:
+        get_jokes()
+    index = random.randint(0, len(jokes))
+    return jokes[index]
+
+
+

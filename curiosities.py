@@ -1,14 +1,10 @@
 from bs4 import BeautifulSoup
 import requests
-# from pymongo import MongoClient
-#
-# client = MongoClient('url_bazy')
-# db = client['curiosities']
+import random
 
+curiosities = []
 
 def get_curiosities():
-    print('scrapping starts')
-    curiosities = []
     response = requests.get('https://pl.wikipedia.org/wiki/Portal:Informatyka/Ciekawostki')
     content = response.text
     soup = BeautifulSoup(content, "html.parser")
@@ -64,7 +60,8 @@ def get_curiosities():
 
 
 
-    for curio in curiosities:
-        print(curio)
-        # db.curiosities.insert_one(curio)
-    print("done")
+def get_random_curio():
+    if len(curiosities) == 0:
+        get_curiosities()
+    index = random.randint(0, len(curiosities))
+    return curiosities[index]
