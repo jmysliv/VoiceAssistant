@@ -19,7 +19,7 @@ with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_siz
     audio = r.listen(source, timeout=2)
 
     try:
-        text = r.recognize_google(audio, language = "pl-PL")
+        text = r.recognize_google(audio, language="pl-PL")
         print("you said: " + text)
 
 
