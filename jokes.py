@@ -22,7 +22,6 @@ def get_jokes():
                 }
                 jokes.append(joke)
             except Exception as e:
-                print(e)
                 pass
 
 

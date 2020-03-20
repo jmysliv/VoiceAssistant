@@ -39,10 +39,8 @@ def search_in_wikipedia(search_phrase):
                 content = response.text
                 soup = BeautifulSoup(content, "html.parser")
             result = soup.find('div', class_="mw-parser-output").p.text
-            print(result)
             return result
         except Exception as e:
-            print(e)
             print("not find")
             search_in_google(search_phrase)
             return None

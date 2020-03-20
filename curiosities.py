@@ -16,7 +16,6 @@ def get_curiosities():
             }
             curiosities.append(curio)
         except Exception as e:
-            print(e)
             pass
     response = requests.get('https://pl.wikipedia.org/wiki/Portal:Zoologia/Ciekawostki')
     content = response.text
@@ -29,7 +28,6 @@ def get_curiosities():
             }
             curiosities.append(curio)
         except Exception as e:
-            print(e)
             pass
     response = requests.get('https://pl.wikipedia.org/wiki/Portal:%C5%BBegluga/Ciekawostki')
     content = response.text
@@ -42,7 +40,6 @@ def get_curiosities():
             }
             curiosities.append(curio)
         except Exception as e:
-            print(e)
             pass
     response = requests.get('https://pl.wikipedia.org/wiki/Portal:%C5%BBeglarstwo/Czy_wiesz,_%C5%BCe')
     content = response.text
@@ -55,7 +52,6 @@ def get_curiosities():
             }
             curiosities.append(curio)
         except Exception as e:
-            print(e)
             pass
 
 
