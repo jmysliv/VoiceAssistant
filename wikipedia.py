@@ -1,6 +1,8 @@
 import json
 from bs4 import BeautifulSoup
 import requests
+import json_parser
+from selenium import webdriver
 
 def is_wikipedia_page_exist(search_phrase):
     response = requests.get('https://pl.m.wikipedia.org/wiki/' + str(search_phrase))
@@ -14,10 +16,16 @@ def is_wikipedia_page_exist(search_phrase):
         pass
     return True
 
+def search_in_google(search_phrase):
+    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver80.exe")
+    driver.maximize_window()
+    driver.get("https://www.google.pl/")
+    json_parser.parse_json("./json_files/google.json", driver, search_phrase)
+
 def search_in_wikipedia(search_phrase):
     if not is_wikipedia_page_exist(search_phrase):
         print("not find")
-        #search in google
+        search_in_google(search_phrase)
         return None
     else:
         response = requests.get('https://pl.m.wikipedia.org/wiki/' + str(search_phrase))
@@ -35,5 +43,6 @@ def search_in_wikipedia(search_phrase):
             return result
         except Exception as e:
             print(e)
-            # search in google
+            print("not find")
+            search_in_google(search_phrase)
             return None

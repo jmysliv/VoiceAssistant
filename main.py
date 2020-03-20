@@ -36,11 +36,12 @@ if text == "suchar":
 elif text == "ciekawostki":
     print(curiosities.get_curiosities())
 elif "Uruchom" in text:
-    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver.exe")
+    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver80.exe")
     driver.maximize_window()
     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
     print(text.replace('uruchom', ''))
     json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', ''))
 else:
     wikipedia.search_in_wikipedia(text)
+
 

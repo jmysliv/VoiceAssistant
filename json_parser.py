@@ -19,7 +19,7 @@ def parse_json(json_path, driver, search):
         commands_dict = json.loads(f.read())
 
     for command in commands_dict:
-        time.sleep(0.5)
+        time.sleep(1)
         try:
             element = WebDriverWait(driver, command.get("timeout"))\
                 .until(EC.presence_of_element_located((getattr(By, command.get("search_by")), command.get("element_name"))))
