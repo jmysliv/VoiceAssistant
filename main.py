@@ -4,6 +4,7 @@ import jokes
 import curiosities
 import json_parser
 import wikipedia
+import weather
 
 WAKE = "Grażyna"
 mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"
@@ -40,6 +41,7 @@ while True:
     if text.count(WAKE) > 0:
         print("I am ready")
         text = get_audio()
+        print(text)
         if text == "suchar":
             print(jokes.get_random_joke())
         elif text == "ciekawostki":
@@ -49,6 +51,8 @@ while True:
             driver.maximize_window()
             driver.get("https://www.youtube.com/?hl=pl&gl=PL")
             json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', ''))
+        elif "pogoda" in text:
+            weather.check_weather(text.replace('pogoda', ''))
         else:
             result = wikipedia.search_in_wikipedia(text)
             if result is not None:
