@@ -42,7 +42,7 @@ if "Uruchom" in text:
     driver.maximize_window()
     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
     print(text.replace('uruchom', ''))
-    json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', ''))
+    json_parser.parse_json("./json_files/yt.json", driver, text.replace('Uruchom', ''))
     print(curiosities.get_random_curio())
 
 wikipedia.search_in_wikipedia(text)
