@@ -1,4 +1,4 @@
-import speech_recognition as sr
+import SpeechRecognition as sr
 import jokes
 import curiosities
 
