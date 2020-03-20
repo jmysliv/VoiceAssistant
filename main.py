@@ -1,6 +1,8 @@
-import SpeechRecognition as sr
+import speech_recognition as sr
+from selenium import webdriver
 import jokes
 import curiosities
+import json_parser
 
 mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"
 sample_rate = 48000
@@ -15,13 +17,11 @@ for i, microphone_name in enumerate(mic_list):
 with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_size) as source:
     r.adjust_for_ambient_noise(source)
     print("Say Something")
-    # listens for the user's input
-    audio = r.listen(source, timeout=2)
+    audio = r.listen(source, timeout=5)
 
     try:
         text = r.recognize_google(audio, language="pl-PL")
         print("you said: " + text)
-
 
     except sr.UnknownValueError:
         print("Google Speech Recognition could not understand audio")
@@ -34,3 +34,10 @@ if text == "suchar":
 
 if text == "ciekawostki":
     curiosities.get_curiosities()
+
+if "Uruchom" in text:
+    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver")
+    driver.maximize_window()
+    driver.get("https://www.youtube.com/?hl=pl&gl=PL")
+    print(text.replace('uruchom', ''))
+    json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', ''))

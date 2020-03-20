@@ -38,12 +38,12 @@ def parse_json(json_path, driver, search):
                 globals()[commands_to_run[i]](getattr(element, commands_to_run[i+1]))
 
 
-driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver")
-driver.maximize_window()
-driver.get("https://www.google.com/")
-parse_json("./json_files/google.json", driver, "despascito")
-time.sleep(5)
-driver.get("https://www.youtube.com/?hl=pl&gl=PL")
-parse_json("./json_files/yt.json", driver, "despascito")
+# driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver")
+# driver.maximize_window()
+# driver.get("https://www.google.com/")
+# parse_json("./json_files/google.json", driver, "despascito")
+# time.sleep(5)
+# driver.get("https://www.youtube.com/?hl=pl&gl=PL")
+# parse_json("./json_files/yt.json", driver, "despascito")
 
 
