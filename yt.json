@@ -1,0 +1,6 @@
+[
+  {"search_by": "ID", "timeout": 5,"element_name": "search", "send_keys": 1, "args":[], "run": [] },
+  {"search_by": "TAG_NAME", "timeout": 5,"element_name": "ytd-video-renderer","send_keys": 0, "args":["click"], "run": []},
+  {"search_by": "CLASS_NAME", "timeout": 5,"element_name": "ytp-fullscreen-button","send_keys": 0, "args":["click"], "run": []},
+  {"search_by": "CLASS_NAME", "timeout": 5,"element_name": "ytp-time-duration","send_keys": 0, "args":[], "run": ["wait_to_end", "text"] }
+]

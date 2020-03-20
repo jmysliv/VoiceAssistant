@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
@@ -22,8 +23,9 @@ def parse_json(json_path, driver, search):
         try:
             element = WebDriverWait(driver, command.get("timeout"))\
                 .until(EC.presence_of_element_located((getattr(By, command.get("search_by")), command.get("element_name"))))
-            if command["element_name"] == "search" or command["element_name"] == "input":
+            if command["send_keys"]:
                 element.send_keys(search)
+                element.send_keys(Keys.RETURN)
         except TimeoutException:
             print("Loading took too much time!")
         if command.get("args"):
@@ -38,13 +40,10 @@ def parse_json(json_path, driver, search):
 
 driver = webdriver.Chrome(executable_path=r"/home/sebastian/repos/VoiceAssistant/chromedriver")
 driver.maximize_window()
-driver.get("https://www.google.pl/")
+driver.get("https://www.google.com/")
 parse_json("/home/sebastian/PycharmProjects/voiceAssistant/google.json", driver, "despascito")
+time.sleep(5)
+driver.get("https://www.youtube.com/?hl=pl&gl=PL")
+parse_json("/home/sebastian/PycharmProjects/voiceAssistant/yt.json", driver, "despascito")
 
-# try:
-#     element = WebDriverWait(driver, 3) \
-#         .until(EC.presence_of_element_located("By", command.get("element_name"))))
-#     if command["element_name"] == "search" or command["element_name"] == "input":
-#         element.send_keys(search)
-# except TimeoutException:
-#     print("Loading took too much time!")
+
