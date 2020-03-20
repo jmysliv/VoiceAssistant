@@ -33,17 +33,14 @@ with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_siz
 
 if text == "suchar":
     print(jokes.get_random_joke())
-
-if text == "ciekawostki":
-    curiosities.get_curiosities()
-
-if "Uruchom" in text:
-    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver")
+elif text == "ciekawostki":
+    print(curiosities.get_curiosities())
+elif "Uruchom" in text:
+    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver.exe")
     driver.maximize_window()
     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
     print(text.replace('uruchom', ''))
     json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', ''))
-    print(curiosities.get_random_curio())
-
-wikipedia.search_in_wikipedia(text)
+else:
+    wikipedia.search_in_wikipedia(text)
 
