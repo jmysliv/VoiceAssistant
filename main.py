@@ -3,6 +3,8 @@ from selenium import webdriver
 import jokes
 import curiosities
 import json_parser
+import wikipedia
+
 
 mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"
 sample_rate = 48000
@@ -30,7 +32,7 @@ with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_siz
         print("Could not request results from Google Speech Recognition service;{0}".format(e))
 
 if text == "suchar":
-    jokes.get_jokes()
+    print(jokes.get_random_joke())
 
 if text == "ciekawostki":
     curiosities.get_curiosities()
@@ -41,3 +43,7 @@ if "Uruchom" in text:
     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
     print(text.replace('uruchom', ''))
     json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', ''))
+    print(curiosities.get_random_curio())
+
+wikipedia.search_in_wikipedia(text)
+
