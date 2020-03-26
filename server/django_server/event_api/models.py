@@ -3,14 +3,16 @@ from datetime import datetime
 
 
 class Event(models.Model):
-    user_id = models.CharField(max_length=200)
+    id = models.AutoField(primary_key=True)
+    username = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='events')
     event_name = models.CharField(max_length=100)
     date = models.DateTimeField(default=datetime.now())
 
 
 class Task(models.Model):
-    user_id = models.CharField(max_length=200)
+    id = models.AutoField(primary_key=True)
+    username = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='tasks')
     task_name = models.CharField(max_length=100)
-    date = models.DateTimeField(blank=True)
+    date = models.DateTimeField(default=datetime.now())
     is_done = models.BooleanField(default=False)
 

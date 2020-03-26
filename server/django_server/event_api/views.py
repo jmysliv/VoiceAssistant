@@ -1,82 +1,65 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.parsers import JSONParser
 from event_api.models import Event, Task
-from event_api.serializers import EventSerializer, TaskSerializer
+from event_api.serializers import EventSerializer, TaskSerializer, UserSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.models import User
+from rest_framework import generics
+from rest_framework import permissions
+from event_api.permissions import IsOwner
 
-@csrf_exempt
-def events_list(request):
-    if request.method == 'GET':
-        events = Event.objects.all()
-        serializer = EventSerializer(events, many=True)
-        return JsonResponse(serializer.data, safe=False)
 
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = EventSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+class EventList(generics.ListCreateAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-@csrf_exempt
-def event_details(request, pk):
-    try:
-        event = Event.objects.get(pk=pk)
-    except Event.DoesNotExist:
-        return HttpResponse(status=404)
+    def get_queryset(self):
+        return Event.objects.filter(username=self.request.user)
 
-    if request.method == 'GET':
-        serializer =EventSerializer(event)
-        return JsonResponse(serializer.data)
+    def perform_create(self, serializer):
+        serializer.save(username=self.request.user)
 
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer =EventSerializer(event, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
 
-    elif request.method == 'DELETE':
-        event.delete()
-        return HttpResponse(status=204)
+class EventDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+    permission_classes = [IsOwner, permissions.IsAuthenticated]
 
-@csrf_exempt
-def tasks_list(request):
-    if request.method == 'GET':
-        tasks = Task.objects.all()
-        serializer = TaskSerializer(tasks, many=True)
-        return JsonResponse(serializer.data, safe=False)
 
-    elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = TaskSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+class TaskList(generics.ListCreateAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
-@csrf_exempt
-def task_details(request, pk):
-    try:
-        task = Task.objects.get(pk=pk)
-    except Task.DoesNotExist:
-        return HttpResponse(status=404)
+    def get_queryset(self):
+        return Task.objects.filter(username=self.request.user)
 
-    if request.method == 'GET':
-        serializer = TaskSerializer(task)
-        return JsonResponse(serializer.data)
+    def perform_create(self, serializer):
+        serializer.save(username=self.request.user)
 
-    elif request.method == 'PUT':
-        data = JSONParser().parse(request)
-        serializer = TaskSerializer(task, data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return JsonResponse(serializer.data)
-        return JsonResponse(serializer.errors, status=400)
 
-    elif request.method == 'DELETE':
-        task.delete()
-        return HttpResponse(status=204)
+class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+    permission_classes = [permissions.IsAuthenticated, IsOwner]
+
+
+@api_view(['POST'])
+def create_user(request):
+    serialized = UserSerializer(data=request.data)
+    if serialized.is_valid():
+        try:
+            User.objects.create_user(serialized.validated_data['username'], serialized.validated_data['email'], serialized.validated_data['password'])
+        except Exception as e:
+            return Response(status=status.HTTP_409_CONFLICT)
+        return Response(serialized.data, status=status.HTTP_201_CREATED)
+    else:
+        return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
