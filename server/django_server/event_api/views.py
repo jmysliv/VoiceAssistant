@@ -26,6 +26,9 @@ class EventDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = EventSerializer
     permission_classes = [IsOwner, permissions.IsAuthenticated]
 
+    def delete_queryset(self):
+        return Event.objects.filter(username=self.request.user)
+
 
 class TaskList(generics.ListCreateAPIView):
     queryset = Task.objects.all()
@@ -52,14 +55,12 @@ def create_user(request):
         try:
             User.objects.create_user(serialized.validated_data['username'], serialized.validated_data['email'], serialized.validated_data['password'])
         except Exception as e:
+            print(e)
             return Response(status=status.HTTP_409_CONFLICT)
         return Response(serialized.data, status=status.HTTP_201_CREATED)
     else:
         return Response(serialized._errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserList(generics.ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
 
 

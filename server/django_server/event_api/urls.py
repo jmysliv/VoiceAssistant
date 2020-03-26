@@ -8,6 +8,5 @@ urlpatterns = [
     path('tasks/', views.TaskList.as_view()),
     path('tasks/<int:pk>/', views.TaskDetail.as_view()),
     path('register/', views.create_user),
-    path('users/', views.UserList.as_view()),
     path('auth/', obtain_auth_token, name='api_token_auth'),
 ]
