@@ -35,8 +35,8 @@ class RegisterPage(tk.Frame):
         self.login_btn = tk.Button(self, text="Register", command=self._register_btn_clicked)
         self.login_btn.grid(row=4, column=0, sticky='E', padx=5, pady=(10, 0))
 
-        self.login_btn = tk.Button(self, text="Back", command=lambda: controller.show_frame("LoginPage"))
-        self.login_btn.grid(row=4, column=1, pady=(10, 0))
+        self.back_btn = tk.Button(self, text="Back", command=lambda: controller.show_frame("LoginPage"))
+        self.back_btn.grid(row=4, column=1, pady=(10, 0))
 
         self.message = tk.Label(self)
         self.message.grid(columnspan=2, pady=10, padx=10)
