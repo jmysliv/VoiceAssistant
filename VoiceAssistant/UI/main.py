@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import font as tk_font
 from UI.Login.login_layout import LoginPage
-from UI.Login.login_layout import RegisterPage
+from UI.Register.resgister_layout import RegisterPage
 
 
 class Main(tk.Tk):
