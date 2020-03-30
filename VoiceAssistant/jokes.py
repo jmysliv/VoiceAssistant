@@ -4,6 +4,7 @@ import random
 
 jokes = []
 
+
 def get_jokes():
     for page_number in range(1, 30):
         if page_number > 1:
@@ -23,7 +24,6 @@ def get_jokes():
                 jokes.append(joke)
             except Exception as e:
                 pass
-
 
 
 def get_random_joke():

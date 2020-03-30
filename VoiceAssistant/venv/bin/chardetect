@@ -1,4 +1,4 @@
-#!/home/sebastian/repos/VoiceAssistant/venv/bin/python
+#!/home/sebastian/repos/VoiceAssistant/VoiceAssistant/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

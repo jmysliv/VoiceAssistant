@@ -37,7 +37,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="/home/sebastian/PycharmProjects/VoiceAssistant/venv"
+VIRTUAL_ENV="/home/sebastian/repos/VoiceAssistant/VoiceAssistant/venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"
