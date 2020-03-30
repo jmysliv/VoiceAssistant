@@ -28,8 +28,8 @@ class LoginPage(tk.Frame):
         self.login_btn = tk.Button(self, text="Login", command=self._login_btn_clicked)
         self.login_btn.grid(row=3, column=0, sticky='E', padx=5, pady=(10, 0))
 
-        self.login_btn = tk.Button(self, text="Register", command=lambda: controller.show_frame("RegisterPage"))
-        self.login_btn.grid(row=3, column=1, pady=(10, 0))
+        self.back_btn = tk.Button(self, text="Register", command=lambda: controller.show_frame("RegisterPage"))
+        self.back_btn.grid(row=3, column=1, pady=(10, 0))
 
         self.message = tk.Label(self)
         self.message.grid(columnspan=2, pady=10, sticky='N')
