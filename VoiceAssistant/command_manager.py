@@ -9,7 +9,7 @@ import weather
 
 CURIO_WAKE = ["ciekawostki", "opowiedz ciekawostkę", "powiedz ciekawostkę", "powiedz coś ciekawego",
               "podaj jakąś ciekawostkę", "powiedz ciekawostkę"]
-JOKES_WAKE = ["suchar", "opowiedz dowcip", "powedz dowcip", "powiedz żart", "opowiedz kawał", "powiedz kawał",
+JOKES_WAKE = ["suchar", "opowiedz dowcip", "powiedz dowcip", "powiedz żart", "opowiedz kawał", "powiedz kawał",
               "opowiedz żart", "żart", "dowcip"]
 
 
@@ -51,33 +51,36 @@ def start_listening(frame):
             frame.assistant_listening()
             print("I am ready")
             text = get_audio(sample_rate, chunk_size, 5)
-            if text == "":
-                frame.user_speaks(text)
-                continue
+            while text == "":
+                frame.assistant_doesnt_understand()
+                text = get_audio(sample_rate, chunk_size, 5)
             print(text)
             frame.user_speaks(text)
             text = text.lower()
-            if text in JOKES_WAKE:
-                if len(jokes.jokes) == 0:
-                    frame.assistant_speaks("Chwileczkę...")
-                joke = jokes.get_random_joke()
-                frame.assistant_speaks(joke['first_part'])
-                time.sleep(2)
-                frame.assistant_speaks(joke['second_part'])
-            elif text in CURIO_WAKE:
-                frame.assistant_speaks(curiosities.get_random_curio()['curio'])
-            elif "uruchom" in text:
-                driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver80.exe")
-                driver.maximize_window()
-                driver.get("https://www.youtube.com/?hl=pl&gl=PL")
-                json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', '').upper())
-            elif "pogoda" in text:
-                frame.assistant_speaks(weather.check_weather(text))
-            elif "stop" in text:
-                break
-            else:
-                result = wikipedia.search_in_wikipedia(text)
-                if result is not None:
-                    frame.assistant_speaks(result)
+            try:
+                if text in JOKES_WAKE:
+                    if len(jokes.jokes) == 0:
+                        frame.assistant_speaks("Chwileczkę...")
+                    joke = jokes.get_random_joke()
+                    frame.assistant_speaks(joke['first_part'])
+                    time.sleep(5)
+                    frame.assistant_speaks(joke['second_part'])
+                elif text in CURIO_WAKE:
+                    frame.assistant_speaks(curiosities.get_random_curio()['curio'])
+                elif "uruchom" in text:
+                    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver80.exe")
+                    driver.maximize_window()
+                    driver.get("https://www.youtube.com/?hl=pl&gl=PL")
+                    json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', '').upper())
+                elif "pogoda" in text:
+                    frame.assistant_speaks(weather.check_weather(text))
+                elif "stop" in text:
+                    break
+                else:
+                    result = wikipedia.search_in_wikipedia(text)
+                    if result is not None:
+                        frame.assistant_speaks(result)
+            except Exception as e:
+                pass
 
 
