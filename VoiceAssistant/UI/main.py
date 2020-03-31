@@ -32,16 +32,19 @@ class Main(tk.Tk):
     def show_frame(self, page_name, *args):
         x_cord = self.winfo_rootx()
         y_cord = self.winfo_rooty()
+        frame = self.frames[page_name]
+        frame.tkraise()
         if page_name == "RegisterPage":
             self.geometry("{}x{}+{}+{}".format(500, 300, x_cord, y_cord))
         if page_name == "LoginPage":
             self.geometry("{}x{}+{}+{}".format(400, 250, x_cord, y_cord))
         if page_name == "HomePage":
             self.geometry("{}x{}+{}+{}".format(800, 600, x_cord, y_cord))
-            self.frames[page_name].print_message("Witaj {}, jestem twoim asystentem głosowym, w czym Ci mogę pomóc ???".format(args[0]))
+            self.frames[page_name].assistant_speaks(message="Witaj {}, jestem twoim asystentem głosowym, w czym Ci mogę pomóc ???".format(args[0]))
+            self.after(4000, lambda: self.frames[page_name].user_speaks(message="halo asysteńcie"))
+            self.after(6000, lambda: self.frames[page_name].assistant_speaks(message="Siema debilu"))
 
-        frame = self.frames[page_name]
-        frame.tkraise()
+
 
 
 if __name__ == "__main__":
