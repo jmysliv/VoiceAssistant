@@ -10,12 +10,12 @@ WAKE = "Grażyna"
 mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"
 sample_rate = 48000
 chunk_size = 2048
-
 mic_list = sr.Microphone.list_microphone_names()
 
 for i, microphone_name in enumerate(mic_list):
     if microphone_name == mic_name:
         device_id = i
+
 
 def get_audio():
     r = sr.Recognizer()
@@ -33,6 +33,7 @@ def get_audio():
             return ""
         except sr.RequestError as e:
             print("Could not request results from Google Speech Recognition service;{0}".format(e))
+
 
 while True:
     print("Listening")

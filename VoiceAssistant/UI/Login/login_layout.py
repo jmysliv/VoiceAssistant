@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 from UI.Login.login_service import login
 
@@ -6,7 +7,8 @@ class LoginPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
+        global username
+        self.controller = controller
         self.label_username = tk.Label(self, text="Username")
         self.label_password = tk.Label(self, text="Password")
 
@@ -28,7 +30,7 @@ class LoginPage(tk.Frame):
         self.login_btn = tk.Button(self, text="Login", command=self._login_btn_clicked)
         self.login_btn.grid(row=3, column=0, sticky='E', padx=5, pady=(10, 0))
 
-        self.register_btn = tk.Button(self, text="Register", command=lambda: controller.show_frame("RegisterPage"))
+        self.register_btn = tk.Button(self, text="Register", command=lambda: self.controller.show_frame("RegisterPage"))
         self.register_btn.grid(row=3, column=1, pady=(10, 0))
 
         self.message = tk.Label(self)
@@ -40,7 +42,8 @@ class LoginPage(tk.Frame):
         password = self.entry_password.get()
 
         if login(username, password):
-            self.message.config(text="Welcome " + username, fg="green")
+            self.message.config(text="Login successful!!!", fg="green")
+            time.sleep(1)
+            self.controller.show_frame("HomePage", username)
         else:
             self.message.config(text="Invalid username or password!!!", fg="red")
-
