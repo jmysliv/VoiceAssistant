@@ -3,6 +3,8 @@ from tkinter import font as tk_font
 from UI.Login.login_layout import LoginPage
 from UI.Register.resgister_layout import RegisterPage
 from UI.HomePage.home_page_layout import HomePage
+import command_manager
+import threading
 
 
 class Main(tk.Tk):
@@ -40,11 +42,8 @@ class Main(tk.Tk):
             self.geometry("{}x{}+{}+{}".format(400, 250, x_cord, y_cord))
         if page_name == "HomePage":
             self.geometry("{}x{}+{}+{}".format(800, 600, x_cord, y_cord))
-            self.frames[page_name].assistant_speaks(message="Witaj {}, jestem twoim asystentem głosowym, w czym Ci mogę pomóc ???".format(args[0]))
-            self.after(4000, lambda: self.frames[page_name].user_speaks(message="halo asysteńcie"))
-            self.after(6000, lambda: self.frames[page_name].assistant_speaks(message="Siema debilu"))
-
-
+            frame.assistant_speaks(message="Witaj {}, mów do mnie Grażyna, w czym Ci mogę pomóc ???".format(args[0]))
+            threading.Thread(target=command_manager.start_listening, args=([frame]), daemon=True).start()
 
 
 if __name__ == "__main__":

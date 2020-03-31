@@ -2,6 +2,7 @@ import requests
 from geotext import GeoText
 from googletrans import Translator
 
+
 def check_weather(text):
     city = find_city_in_string(text)
     if city is None:
@@ -31,6 +32,7 @@ def find_city_in_string(text):
     except Exception as e:
         print(e)
         pass
+
 
 def find_country_instring(text):
     try:

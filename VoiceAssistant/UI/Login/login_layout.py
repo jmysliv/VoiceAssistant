@@ -43,7 +43,6 @@ class LoginPage(tk.Frame):
 
         if login(username, password):
             self.message.config(text="Login successful!!!", fg="green")
-            time.sleep(1)
             self.controller.show_frame("HomePage", username)
         else:
             self.message.config(text="Invalid username or password!!!", fg="red")

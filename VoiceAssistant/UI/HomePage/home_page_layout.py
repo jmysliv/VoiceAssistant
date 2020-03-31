@@ -1,5 +1,4 @@
 import tkinter as tk
-import time
 
 
 class HomePage(tk.Frame):
@@ -8,6 +7,9 @@ class HomePage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.controller = controller
         self.row_counter = 1
+
+    def assistant_listening(self):
+        tk.Label(self, text="Mów...", font=("Helvetica", 9), bg="light blue").grid(row=self.row_counter, column=1, sticky="w", padx=5, pady=3)
 
     def assistant_speaks(self, message):
         label = tk.Label(self, text="", font=("Helvetica", 9), bg="light grey")
