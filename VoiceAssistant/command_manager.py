@@ -72,12 +72,12 @@ def start_listening(frame):
                 driver.get("https://www.youtube.com/?hl=pl&gl=PL")
                 json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', '').upper())
             elif "pogoda" in text:
-                weather.check_weather(text.replace('pogoda', ''))
+                frame.assistant_speaks(weather.check_weather(text))
             elif "stop" in text:
                 break
             else:
                 result = wikipedia.search_in_wikipedia(text)
                 if result is not None:
-                    print(result)
+                    frame.assistant_speaks(result)
 
 

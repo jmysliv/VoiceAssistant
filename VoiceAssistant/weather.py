@@ -1,6 +1,7 @@
 import requests
 from geotext import GeoText
 from googletrans import Translator
+import json
 
 
 def check_weather(text):
@@ -15,8 +16,7 @@ def check_weather(text):
         return content
     response = requests.get('http://api.openweathermap.org/data/2.5/weather?q=' + str(city) +'&APPID=caeadda0fd761bace210ea2cd08bf167')
     content = response.text
-    print(content)
-    return content
+    return prepare_weather_string(content)
 
 
 def find_city_in_string(text):
@@ -47,3 +47,12 @@ def find_country_instring(text):
     except Exception as e:
         print(e)
         pass
+
+
+def prepare_weather_string(response):
+    parsed_json = json.loads(response)
+    english = "In " + parsed_json["name"] + " is " + parsed_json["weather"][0]["description"] + " and temperature is " +\
+              str((parsed_json["main"]["temp"] - 275.15).__round__()) + " Celsius degrees."
+    translator = Translator()
+    translate = translator.translate(english, src='en', dest='pl')
+    return translate.text
