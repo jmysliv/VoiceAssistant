@@ -49,12 +49,10 @@ def start_listening(frame):
 
         if text.count(wake) > 0:
             frame.assistant_listening()
-            print("I am ready")
             text = get_audio(sample_rate, chunk_size, 5)
             while text == "":
                 frame.assistant_doesnt_understand()
                 text = get_audio(sample_rate, chunk_size, 5)
-            print(text)
             frame.user_speaks(text)
             text = text.lower()
             try:
@@ -73,7 +71,11 @@ def start_listening(frame):
                     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
                     json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', '').upper())
                 elif "pogoda" in text:
-                    frame.assistant_speaks(weather.check_weather(text))
+                    weather_condition = weather.check_weather(text)
+                    if weather_condition is None:
+                        frame.assistant_speaks("Niestety nie udało mi się znaleźć pogody dla podanego miejsca")
+                    else:
+                        frame.assistant_speaks(weather_condition)
                 elif "stop" in text:
                     break
                 else:
@@ -81,6 +83,7 @@ def start_listening(frame):
                     if result is not None:
                         frame.assistant_speaks(result)
             except Exception as e:
+                print(e)
                 pass
 
 

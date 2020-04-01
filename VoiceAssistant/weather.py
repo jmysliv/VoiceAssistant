@@ -12,8 +12,7 @@ def check_weather(text):
             return None
         response = requests.get('http://api.openweathermap.org/data/2.5/weather?q=' + str(country) + '&APPID=caeadda0fd761bace210ea2cd08bf167')
         content = response.text
-        print(content)
-        return content
+        return prepare_weather_string(content)
     response = requests.get('http://api.openweathermap.org/data/2.5/weather?q=' + str(city) +'&APPID=caeadda0fd761bace210ea2cd08bf167')
     content = response.text
     return prepare_weather_string(content)
@@ -21,10 +20,8 @@ def check_weather(text):
 
 def find_city_in_string(text):
     try:
-        print(text)
         translator = Translator()
         translate = translator.translate(text, src='pl', dest='en')
-        print(translate.text)
         cities = GeoText(translate.text).cities
         if len(cities) == 0:
             return None
@@ -36,10 +33,8 @@ def find_city_in_string(text):
 
 def find_country_instring(text):
     try:
-        print(text)
         translator = Translator()
         translate = translator.translate(text, src='pl', dest='en')
-        print(translate.text)
         countries = GeoText(translate.text).countries
         if len(countries) == 0:
             return None

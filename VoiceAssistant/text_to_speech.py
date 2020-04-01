@@ -3,9 +3,12 @@ import pyttsx3
 
 
 def speak(text):
-    engine = pyttsx3.init()
-    engine.say(text)
-    engine.runAndWait()
+    try:
+        engine = pyttsx3.init()
+        engine.say(text)
+        engine.runAndWait()
+    except Exception as e:
+        print(e)
 
 
 def insert_newlines(string, every=64):
@@ -23,7 +26,6 @@ def insert_newlines(string, every=64):
 
 
 def find_blank(string):
-    print(string)
     for i in range(len(string) - 1, 0, -1):
         if string[i] is " ":
             return i

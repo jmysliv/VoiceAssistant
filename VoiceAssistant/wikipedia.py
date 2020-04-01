@@ -6,7 +6,7 @@ import re
 
 
 def is_wikipedia_page_exist(search_phrase):
-    response = requests.get('https://pl.m.wikipedia.org/wiki/' + str(search_phrase))
+    response = requests.get('https://pl.wikipedia.org/wiki/' + str(search_phrase))
     content = response.text
     soup = BeautifulSoup(content, "html.parser")
     try:
@@ -31,12 +31,12 @@ def search_in_wikipedia(search_phrase):
         search_in_google(search_phrase)
         return None
     else:
-        response = requests.get('https://pl.m.wikipedia.org/wiki/' + str(search_phrase))
+        response = requests.get('https://pl.wikipedia.org/wiki/' + str(search_phrase))
         content = response.text
         soup = BeautifulSoup(content, "html.parser")
         try:
             test = soup.find('a', href="/wiki/Wikipedia:Strona_ujednoznaczniaj%C4%85ca")
-            if test is not None:
+            if test is not None and test['title'] == "Ujednoznacznienie":
                 new_address = soup.find('div', class_="mw-parser-output").ul.li.a['href']
                 response = requests.get('https://pl.m.wikipedia.org/' + str(new_address))
                 content = response.text
@@ -45,6 +45,6 @@ def search_in_wikipedia(search_phrase):
             result = re.sub(r"\[\d\]", "", result)
             return result
         except Exception as e:
-            print("not find")
+            print(e)
             search_in_google(search_phrase)
             return None
