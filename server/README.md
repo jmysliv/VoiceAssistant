@@ -1,7 +1,7 @@
 REST API for Voice Assistant
 ===
 
-##### REST path
+##### REST paths
 
 + [/events/ GET](##get-events)
 + [/events/ POST](##creating-event)
@@ -13,6 +13,12 @@ REST API for Voice Assistant
 + [/tasks/id/ GET](##get-task)
 + [/tasks/id/ PUT](##updating-task)
 + [/tasks/id/ DELETE](##delete-task)
++ [/messages/ GET](##get-messages)
++ [/messages/ POST](##sending-message)
++ [/messages/id/ GET](##get-message)
++ [/messages/id/ PUT](##update-message)
++ [/messages/id/ DELETE](##delete-message)
++ [/inbox/ GET](##check-inbox)
 + [/register/ POST](##creating-new-user)
 + [/auth/ POST](##login)
 
@@ -107,7 +113,7 @@ Possible responses:
         "date": "In ISO 8601 format",
         "id": "Integer"
     },
-    ...
+    
 ]
 ```
 
@@ -212,7 +218,7 @@ Possible responses:
         "id": "Integer",
         "is_done": "Boolean"
     },
-    ...
+    
 ]
 ```
 
@@ -274,4 +280,136 @@ Possible responses:
     "id": "Integer",
     "is_done": "Boolean"
 }
+```
+## Sending message
+```/messages/ POST```
+
+JSON params
+```JSON
+{
+    "receiver": "username of person you want send message to",
+    "content": "your message",
+    "date": "Default: now",
+    "is_read": "Default: False"
+}
+```
+Possible responses:
++ *status code 401* : not authenticated
+
++ *status code 400* : receiver/content is required
+
++ *status code 201* : message send
+```JSON
+{
+    "sender": "Your username",
+    "receiver": "username of person you want send message to",
+    "content": "your message",
+    "date": "In ISO 8601 format",
+    "id": "Integer",
+    "is_read": "True/False"
+}
+```
+
+## Get messages
+```/messages/ GET```
+
+
+Possible responses:
+
++ *status code 401* : not authenticated
+
++ *status code 200* : list of messeges you sent
+```JSON
+[
+    {
+        "sender": "Your username",
+        "receiver": "username of person you want send message to",
+        "content": "your message",
+        "date": "In ISO 8601 format",
+        "id": "Integer",
+        "is_read": "True/False"
+    },
+
+]
+```
+
+## Get message
+```/messages/id/ GET```
+
+
+Possible responses:
+
++ *status code 403* : messege was sent to somebody else
+
++ *status code 401* : not authenticated
+
++ *status code 200* : messege for you
+```JSON
+{
+    "sender": "username of person that send you this message",
+    "receiver": "your username",
+    "content": "your message",
+    "date": "In ISO 8601 format",
+    "id": "Integer",
+    "is_read": "True/False"
+}
+```
+
+## Delete message
+```/messages/id/ DELETE```
+
+Possible responses:
+
++ *status code 403* : messege was sent to somebody else
+
++ *status code 401* : not authenticated
+
++ *status code 204* : message deleted
+
+
+## Update message
+```/messages/id/ PUT```
+
+JSON params
+```JSON
+{ 
+    "is_read": "True/False"
+}
+```
+Possible responses:
++ *status code 401* : not authenticated
+
++ *status code 200* : message updated
+```JSON
+{
+    "sender": "username of person that send you this message",
+    "receiver": "your username",
+    "content": "your message",
+    "date": "In ISO 8601 format",
+    "id": "Integer",
+    "is_read": "True/False"
+}
+```
+
+## Check inbox
+```/inbox/ GET```
+
+
+Possible responses:
+
++ *status code 401* : not authenticated
+
++ *status code 200* : list of messeges you received
+```JSON
+[
+    {
+        "sender": "username of person that send you this message",
+        "receiver": "your username",
+        "content": "your message",
+        "date": "In ISO 8601 format",
+        "id": "Integer",
+        "is_read": "True/False"
+    },
+
+]
 ```

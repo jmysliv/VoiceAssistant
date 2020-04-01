@@ -1,6 +1,6 @@
 from event_api.models import Event, Task, Message
 from event_api.serializers import EventSerializer, TaskSerializer, UserSerializer, MessageSerializer
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
@@ -67,6 +67,7 @@ class MessageDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 @api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
 def show_inbox(request):
     my_messages = Message.objects.filter(receiver=request.user)
     serializer = MessageSerializer(my_messages, many=True)
