@@ -59,8 +59,6 @@ REST_FRAMEWORK = {
 
 }
 
-
-
 ROOT_URLCONF = 'django_server.urls'
 
 TEMPLATES = [

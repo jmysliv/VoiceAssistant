@@ -1,12 +1,12 @@
-from event_api.models import Event, Task
-from event_api.serializers import EventSerializer, TaskSerializer, UserSerializer
+from event_api.models import Event, Task, Message
+from event_api.serializers import EventSerializer, TaskSerializer, UserSerializer, MessageSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth.models import User
 from rest_framework import generics
 from rest_framework import permissions
-from event_api.permissions import IsOwner
+from event_api.permissions import IsOwner, IsReceiver
 
 
 class EventList(generics.ListCreateAPIView):
@@ -46,6 +46,31 @@ class TaskDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwner]
+
+
+class MessageList(generics.ListCreateAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return Message.objects.filter(sender=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(sender=self.request.user)
+
+
+class MessageDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Message.objects.all()
+    serializer_class = MessageSerializer
+    permission_classes = [permissions.IsAuthenticated, IsReceiver]
+
+
+@api_view(['GET'])
+def show_inbox(request):
+    my_messages = Message.objects.filter(receiver=request.user)
+    serializer = MessageSerializer(my_messages, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
 
 
 @api_view(['POST'])
