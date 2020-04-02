@@ -6,11 +6,17 @@ import curiosities
 import json_parser
 import wikipedia
 import weather
+import event_service
 
 CURIO_WAKE = ["ciekawostki", "opowiedz ciekawostkę", "powiedz ciekawostkę", "powiedz coś ciekawego",
               "podaj jakąś ciekawostkę", "powiedz ciekawostkę"]
 JOKES_WAKE = ["suchar", "opowiedz dowcip", "powiedz dowcip", "powiedz żart", "opowiedz kawał", "powiedz kawał",
               "opowiedz żart", "żart", "dowcip"]
+
+ADD_EVENT_WAKE = ["dodaj wydarzenie", "dodaj nowe wydarzenie", "zaplanuj wydarzenie"]
+
+SHOW_EVENTS = ["pokaż wydarzenia", "wyświetl wydarzenia", "jakie mam wydarzenia", "co mam zaplanowane",
+               "co mam w planach"]
 
 
 def get_audio(sample_rate, chunk_size, timeout):
@@ -76,6 +82,22 @@ def start_listening(frame, token):
                         frame.assistant_speaks("Niestety nie udało mi się znaleźć pogody dla podanego miejsca")
                     else:
                         frame.assistant_speaks(weather_condition)
+                elif text in ADD_EVENT_WAKE:
+                    frame.assistant_speaks("Podaj nazwę wydarzenia")
+                    name = get_audio(sample_rate, chunk_size, 5)
+                    while name == "":
+                        frame.assistant_doesnt_understand()
+                        name = get_audio(sample_rate, chunk_size, 5)
+                    frame.user_speaks(name)
+                    frame.assistant_speaks("Podaj date(w formacie: dzień miesiąc rok czas)")
+                    date = get_audio(sample_rate, chunk_size, 5)
+                    while date == "":
+                        frame.assistant_doesnt_understand()
+                        date = get_audio(sample_rate, chunk_size, 5)
+                    frame.user_speaks(date)
+                    frame.assistant_speaks(event_service.add_event(name, date, token))
+                elif text in SHOW_EVENTS:
+                    frame.assistant_speaks(event_service.show_events(token))
                 elif "stop" in text:
                     break
                 else:

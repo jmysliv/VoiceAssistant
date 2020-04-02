@@ -1,8 +1,9 @@
-from gtts import gTTS
+import re
 import pyttsx3
 
 
 def speak(text):
+    text = remove_brackets(text)
     try:
         engine = pyttsx3.init()
         engine.say(text)
@@ -30,3 +31,7 @@ def find_blank(string):
         if string[i] is " ":
             return i
     return 1
+
+
+def remove_brackets(text):
+    return re.sub("[\(\[].*?[\)\]]", "", text)
