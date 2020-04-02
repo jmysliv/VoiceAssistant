@@ -1,7 +1,8 @@
 import requests
 import datetime
 
-API_ENDPOINT = "http://46.101.198.229:6000/events/"
+
+API_ENDPOINT = "http://46.101.198.229:6000/tasks/"
 
 
 def parse_months_name(date):
@@ -32,36 +33,60 @@ def parse_months_name(date):
     return date
 
 
-def parse_events_list(response):
-    events_string = ""
-    for event in response:
-        date = datetime.datetime.strptime(event['date'], '%Y-%m-%dT%H:%M:%SZ')
-        if  date > datetime.datetime.now():
-            events_string = events_string + str(event['id']) + ". " + event['event_name'] + " zaplanowane na " + \
+def parse_tasks_list(response, is_done):
+    tasks_string = ""
+    for task in response:
+        date = datetime.datetime.strptime(task['date'], '%Y-%m-%dT%H:%M:%SZ')
+        if task['is_done'] == is_done:
+            tasks_string = tasks_string + str(task['id']) + ". " + task['task_name'] + " trzeba zrobić do " + \
                             datetime.datetime.strftime(date, '%d/%m/%Y %H:%M') + "\n"
-    return events_string
+    return tasks_string
 
 
-def add_event(name, date_string, token):
+def add_task(name, date_string, token):
     try:
         date = datetime.datetime.strptime(parse_months_name(date_string), '%d/%m/%Y %H:%M')
     except:
         return "Podana data jest nieprawidłowa"
 
-    data = {'event_name': name,
+    data = {'task_name': name,
             'date': date}
     headers = {'Authorization': 'Token ' + token}
     response = requests.post(API_ENDPOINT, data=data, headers=headers)
     if response.status_code == 201:
-        return "Dodano wydarzenie"
+        return "Dodano zadanie"
     else:
-        return "Nie udało się dodać wydarzenia"
+        return "Nie udało się dodać zadania"
 
 
-def show_events(token):
+def show_undone_tasks(token):
     headers = {'Authorization': 'Token ' + token}
     response = requests.get(API_ENDPOINT, headers=headers)
     if response.status_code == 200:
-        return parse_events_list(response.json())
+        return parse_tasks_list(response.json(), False)
     else:
-        return "Nie udało się pobrać wydarzeń"
+        return "Nie udało się pobrać zadań"
+
+
+def show_finished_tasks(token):
+    headers = {'Authorization': 'Token ' + token}
+    response = requests.get(API_ENDPOINT, headers=headers)
+    if response.status_code == 200:
+        return parse_tasks_list(response.json(), True)
+    else:
+        return "Nie udało się pobrać zadań"
+
+
+def mark_task_as_done(token, id):
+    headers = {'Authorization': 'Token ' + token}
+    response = requests.get(API_ENDPOINT + str(id) + "/", headers=headers)
+    if response.status_code != 200:
+        return "Nie udało się zaktualizować zadania"
+
+    data = {'task_name': response.json()['name'],
+            'is_done': True}
+    response = requests.post(API_ENDPOINT + str(id) + "/", data=data, headers=headers)
+    if response.status_code == 200:
+        return "Zaktualizowano zadanie"
+    else:
+        return "Nie udało się zaktualizować zadania"

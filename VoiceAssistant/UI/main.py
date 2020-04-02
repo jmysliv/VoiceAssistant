@@ -2,9 +2,9 @@ import tkinter as tk
 from tkinter import font as tk_font
 import command_manager
 import threading
-from VoiceAssistant.UI.HomePage.home_page_layout import HomePage
-from VoiceAssistant.UI.Login.login_layout import LoginPage
-from VoiceAssistant.UI.Register.resgister_layout import RegisterPage
+from UI.HomePage.home_page_layout import HomePage
+from UI.Login.login_layout import LoginPage
+from UI.Register.resgister_layout import RegisterPage
 
 
 class Main(tk.Tk):
