@@ -1,5 +1,5 @@
 import tkinter as tk
-from UI.Login.login_service import login
+from UI.Register.register_service import validate, register
 
 
 class RegisterPage(tk.Frame):
@@ -13,8 +13,8 @@ class RegisterPage(tk.Frame):
         self.label_conf_pass = tk.Label(self, text="Confirm Password")
 
         self.entry_username = tk.Entry(self)
-        self.entry_email = tk.Entry(self, show="*")
-        self.entry_password = tk.Entry(self)
+        self.entry_email = tk.Entry(self)
+        self.entry_password = tk.Entry(self, show="*")
         self.entry_conf_pass = tk.Entry(self, show="*")
 
         self.entry_username.bind('<Return>', lambda _: self._register_btn_clicked())
@@ -32,10 +32,10 @@ class RegisterPage(tk.Frame):
         self.entry_password.grid(row=2, column=1, pady=(10, 0))
         self.entry_conf_pass.grid(row=3, column=1, pady=(10, 0))
 
-        self.login_btn = tk.Button(self, text="Register", command=self._register_btn_clicked)
+        self.login_btn = tk.Button(self, text="Załóż konto", command=self._register_btn_clicked)
         self.login_btn.grid(row=4, column=0, sticky='E', padx=5, pady=(10, 0))
 
-        self.back_btn = tk.Button(self, text="Back", command=lambda: controller.show_frame("LoginPage"))
+        self.back_btn = tk.Button(self, text="Powrót", command=lambda: controller.show_frame("LoginPage"))
         self.back_btn.grid(row=4, column=1, pady=(10, 0))
 
         self.message = tk.Label(self)
@@ -45,8 +45,17 @@ class RegisterPage(tk.Frame):
     def _register_btn_clicked(self):
         username = self.entry_username.get()
         password = self.entry_password.get()
+        email = self.entry_email.get()
+        conf_pass = self.entry_conf_pass.get()
 
-        if login(username, password):
-            self.message.config(text="Welcome " + username, fg="green")
+        validation_result = validate(username, email, password, conf_pass)
+        if validation_result is not "ok":
+            self.message.config(text=validation_result, fg="red")
+            return
         else:
-            self.message.config(text="Invalid username or password!!!", fg="red")
+            response = register(username, email, password)
+            if response is not "ok":
+                self.message.config(text=response, fg="red")
+            else:
+                self.message.config(text="Konto utworzone", fg="green")
+

@@ -32,7 +32,7 @@ def get_audio(sample_rate, chunk_size, timeout):
             return ""
 
 
-def start_listening(frame):
+def start_listening(frame, token):
     wake = "Grażyna"
     sample_rate = 48000
     chunk_size = 2048

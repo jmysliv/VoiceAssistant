@@ -9,8 +9,6 @@ import threading
 
 class Main(tk.Tk):
 
-    username = ""
-
     def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
 
@@ -43,7 +41,7 @@ class Main(tk.Tk):
         if page_name == "HomePage":
             self.geometry("{}x{}+{}+{}".format(600, 600, x_cord, y_cord))
             frame.assistant_speaks(message="Witaj {}, mów do mnie Grażyna, w czym Ci mogę pomóc ???".format(args[0]))
-            threading.Thread(target=command_manager.start_listening, args=([frame]), daemon=True).start()
+            threading.Thread(target=command_manager.start_listening, args=([frame, args[1]]), daemon=True).start()
 
 
 if __name__ == "__main__":
