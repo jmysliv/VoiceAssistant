@@ -11,6 +11,7 @@ import task_service
 
 CURIO_WAKE = ["ciekawostki", "opowiedz ciekawostkę", "powiedz ciekawostkę", "powiedz coś ciekawego",
               "podaj jakąś ciekawostkę", "powiedz ciekawostkę"]
+
 JOKES_WAKE = ["suchar", "opowiedz dowcip", "powiedz dowcip", "powiedz żart", "opowiedz kawał", "powiedz kawał",
               "opowiedz żart", "żart", "dowcip"]
 
@@ -18,12 +19,18 @@ ADD_EVENT_WAKE = ["dodaj wydarzenie", "dodaj nowe wydarzenie", "zaplanuj wydarze
 
 SHOW_EVENTS_WAKE = ["pokaż wydarzenia", "wyświetl wydarzenia", "jakie mam wydarzenia", "co mam zaplanowane",
                "co mam w planach"]
+
 ADD_TASK_WAKE = ["dodaj zadanie", "zaplanuj zadanie", "dodaj rzecz do zrobienia"]
+
 SHOW_UNDONE_TASKS_WAKE = ["pokaż zadania do wykonania", "pokaż niezrobione zadania", "pokaż co mam do zrobienia",
                           "co mam zrobić", "co jest do zrobienia"]
+
 SHOW_DONE_TASKS_WAKE = ["pokaż co zrobiłem", "pokaż zrobione zadania", "co zrobiłem", "co już zrobiłem"]
+
 MARK_TASK_AS_DONE_WAKE = ["dodaj zadanie do zrobionych", "oznacz zadanie jako zrobione", "przenieś zadanie do zrobionych",
                           "zrobiłem zadanie", "wykonałem zadanie"]
+
+YT_WAKE = ["Uruchom", "uruchom", "Włącz", "włącz", "wlacz"]
 
 def get_audio(sample_rate, chunk_size, timeout):
     r = sr.Recognizer()
@@ -77,11 +84,11 @@ def start_listening(frame, token):
                     frame.assistant_speaks(joke['second_part'])
                 elif text in CURIO_WAKE:
                     frame.assistant_speaks(curiosities.get_random_curio()['curio'])
-                elif "uruchom" in text:
-                    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver80.exe")
+                elif "uruchom" in text :
+                    driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
                     driver.maximize_window()
                     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
-                    json_parser.parse_json("./json_files/yt.json", driver, text.replace('uruchom', '').upper())
+                    json_parser.parse_json(".././json_files/yt.json", driver, text.replace('uruchom', '').upper())
                 elif "pogoda" in text:
                     weather_condition = weather.check_weather(text)
                     if weather_condition is None:

@@ -19,10 +19,10 @@ def is_wikipedia_page_exist(search_phrase):
 
 
 def search_in_google(search_phrase):
-    driver = webdriver.Chrome(executable_path=r"./drivers/chromedriver80.exe")
+    driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
     driver.maximize_window()
     driver.get("https://www.google.pl/")
-    json_parser.parse_json("./json_files/google.json", driver, search_phrase)
+    json_parser.parse_json(".././json_files/google.json", driver, search_phrase)
 
 
 def search_in_wikipedia(search_phrase):

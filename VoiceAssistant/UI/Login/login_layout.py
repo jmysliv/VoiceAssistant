@@ -1,4 +1,3 @@
-import time
 import tkinter as tk
 from UI.Login.login_service import login, validate
 
