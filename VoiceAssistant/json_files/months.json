@@ -1,0 +1,14 @@
+[
+  {"month_number": "01", "month_name": "styczen"},
+  {"month_number": "02", "month_name": "luty"},
+  {"month_number": "03", "month_name": "marzec"},
+  {"month_number": "04", "month_name": "kwiecien"},
+  {"month_number": "05", "month_name": "maj"},
+  {"month_number": "06", "month_name": "czerwiec"},
+  {"month_number": "07", "month_name": "lipiec"},
+  {"month_number": "08", "month_name": "sierpien"},
+  {"month_number": "09", "month_name": "wrzesien"},
+  {"month_number": "10", "month_name": "pazdziernik"},
+  {"month_number": "11", "month_name": "listopad"},
+  {"month_number": "12", "month_name": "grudzień"}
+]

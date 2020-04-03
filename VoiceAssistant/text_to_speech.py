@@ -4,6 +4,7 @@ import pyttsx3
 
 def speak(text):
     text = remove_brackets(text)
+    text = text.rstrip("\n")
     try:
         engine = pyttsx3.init()
         engine.say(text)
