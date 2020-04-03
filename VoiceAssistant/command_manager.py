@@ -30,9 +30,9 @@ SHOW_DONE_TASKS_WAKE = ["pokaż co zrobiłem", "pokaż zrobione zadania", "co zr
 MARK_TASK_AS_DONE_WAKE = ["dodaj zadanie do zrobionych", "oznacz zadanie jako zrobione", "przenieś zadanie do zrobionych",
                           "zrobiłem zadanie", "wykonałem zadanie"]
 
-YT_WAKE = ["Uruchom", "uruchom", "Włącz", "włącz", "wlacz"]
+YT_WAKE = ["uruchom", "włącz", "puść"]
 
-CORONA_WAKE = ["koronawirus", "koronawirusie", "Korona wirusie", "korona wirus", "koronawirusa"]
+CORONA_WAKE = ["koronawirus", "koronawirusie", "korona wirusie", "korona wirus", "koronawirusa"]
 
 
 def get_audio(sample_rate, chunk_size, timeout):
@@ -74,7 +74,7 @@ def start_listening(frame, token):
 
     while True:
         print("Listening")
-        text = get_audio(sample_rate, chunk_size, 5)
+        text = get_audio(sample_rate, chunk_size, 2)
 
         if text.count(wake) > 0:
             frame.assistant_listening()
@@ -83,6 +83,7 @@ def start_listening(frame, token):
                 frame.assistant_doesnt_understand()
                 text = get_audio(sample_rate, chunk_size, 5)
             frame.user_speaks(text)
+            old_text = text
             text = text.lower()
             try:
                 if should_wake(JOKES_WAKE, text):
@@ -160,9 +161,7 @@ def start_listening(frame, token):
                 elif "stop" in text:
                     break
                 else:
-                    result = wikipedia.search_in_wikipedia(text)
-                    if result is not None:
-                        frame.assistant_speaks(result)
+                    frame.assistant_speaks(wikipedia.search_in_wikipedia(old_text))
             except Exception as e:
                 print(e)
                 pass
