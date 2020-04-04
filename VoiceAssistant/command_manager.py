@@ -10,29 +10,40 @@ import event_service
 import task_service
 import coronavirus as corona
 import winsound
+import message_service
 
-CURIO_WAKE = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
+CURIO = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
 
-JOKES_WAKE = ["suchar", "suchar", "żart", "dowcip"]
+JOKES = ["suchar", "suchar", "żart", "dowcip"]
 
-ADD_EVENT_WAKE = ["dodaj wydarzenie", "dodaj nowe wydarzenie", "zaplanuj wydarzenie"]
+ADD_EVENT = ["dodaj wydarzenie", "dodaj nowe wydarzenie", "zaplanuj wydarzenie"]
 
-SHOW_EVENTS_WAKE = ["pokaż wydarzenia", "wyświetl wydarzenia", "jakie mam wydarzenia", "co mam zaplanowane",
+SHOW_EVENTS = ["pokaż wydarzenia", "wyświetl wydarzenia", "jakie mam wydarzenia", "co mam zaplanowane",
                "co mam w planach"]
 
-ADD_TASK_WAKE = ["dodaj zadanie", "zaplanuj zadanie", "dodaj rzecz do zrobienia"]
+ADD_TASK = ["dodaj zadanie", "zaplanuj zadanie", "dodaj rzecz do zrobienia"]
 
-SHOW_UNDONE_TASKS_WAKE = ["pokaż zadania do wykonania", "pokaż niezrobione zadania", "pokaż co mam do zrobienia",
+SHOW_UNDONE_TASKS = ["pokaż zadania do wykonania", "pokaż niezrobione zadania", "pokaż co mam do zrobienia",
                           "co mam zrobić", "co jest do zrobienia"]
 
-SHOW_DONE_TASKS_WAKE = ["pokaż co zrobiłem", "pokaż zrobione zadania", "co zrobiłem", "co już zrobiłem"]
+SHOW_DONE_TASKS = ["pokaż co zrobiłem", "pokaż zrobione zadania", "co zrobiłem", "co już zrobiłem"]
 
-MARK_TASK_AS_DONE_WAKE = ["dodaj zadanie do zrobionych", "oznacz zadanie jako zrobione", "przenieś zadanie do zrobionych",
+MARK_TASK_AS_DONE = ["dodaj zadanie do zrobionych", "oznacz zadanie jako zrobione", "przenieś zadanie do zrobionych",
                           "zrobiłem zadanie", "wykonałem zadanie"]
 
-YT_WAKE = ["uruchom", "włącz", "puść"]
+YT = ["uruchom", "włącz", "puść"]
 
-CORONA_WAKE = ["koronawirus", "koronawirusie", "korona wirusie", "korona wirus", "koronawirusa"]
+CORONA = ["koronawirus", "koronawirusie", "korona wirusie", "korona wirus", "koronawirusa"]
+
+SEND_MESSAGE = ["wyślij wiadomość", "napisz wiadomość"]
+
+SHOW_MESSAGES = ["pokaż wysłane wiadomości", "pokaż wiadomości które wysłałem"]
+
+SHOW_INBOX_UNREAD = ["pokaż skrzynkę odbiorczą", "mam jakieś nowę wiadomości", "pokaż nowe wiadomości"]
+
+SHOW_INBOX_READ = ["pokaż przeczytane wiadomości", "pokaż stare wiadomości"]
+
+MARK_MESSAGE_AS_READ = ["oznacz wiadomość jako przeczytaną", "przeczytałem wiadomość"]
 
 
 def get_audio(sample_rate, chunk_size, timeout):
@@ -86,7 +97,7 @@ def start_listening(frame, token):
             old_text = text
             text = text.lower()
             try:
-                if should_wake(JOKES_WAKE, text):
+                if should_wake(JOKES, text):
                     if len(jokes.jokes) == 0:
                         frame.assistant_speaks("Chwileczkę...")
                     joke = jokes.get_random_joke()
@@ -95,9 +106,9 @@ def start_listening(frame, token):
                     frame.assistant_speaks(joke['second_part'])
                     time.sleep(1)
                     winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
-                elif should_wake(CURIO_WAKE, text):
+                elif should_wake(CURIO, text):
                     frame.assistant_speaks(curiosities.get_random_curio()['curio'])
-                elif should_wake(YT_WAKE, text) :
+                elif should_wake(YT, text) :
                     driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
                     driver.maximize_window()
                     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
@@ -108,7 +119,7 @@ def start_listening(frame, token):
                         frame.assistant_speaks("Niestety nie udało mi się znaleźć pogody dla podanego miejsca")
                     else:
                         frame.assistant_speaks(weather_condition)
-                elif should_wake(CORONA_WAKE, text):
+                elif should_wake(CORONA, text):
                     frame.assistant_speaks("Podaj kraj dla którego chciałbyś otrzymać informacje ?")
                     time.sleep(1.5)
                     country_name = get_audio(sample_rate, chunk_size, 5)
@@ -117,7 +128,7 @@ def start_listening(frame, token):
                         country_name = get_audio(sample_rate, chunk_size, 5)
                     frame.user_speaks(country_name)
                     frame.assistant_speaks(corona.get_data_about_corona(country_name))
-                elif should_wake(ADD_EVENT_WAKE, text):
+                elif should_wake(ADD_EVENT, text):
                     frame.assistant_speaks("Podaj nazwę wydarzenia")
                     name = get_audio(sample_rate, chunk_size, 5)
                     while name == "":
@@ -131,9 +142,9 @@ def start_listening(frame, token):
                         date = get_audio(sample_rate, chunk_size, 5)
                     frame.user_speaks(date)
                     frame.assistant_speaks(event_service.add_event(name, date, token))
-                elif should_wake(SHOW_EVENTS_WAKE, text):
+                elif should_wake(SHOW_EVENTS, text):
                     frame.assistant_speaks(event_service.show_events(token))
-                elif should_wake(ADD_TASK_WAKE, text):
+                elif should_wake(ADD_TASK, text):
                     frame.assistant_speaks("Podaj nazwę zadania")
                     name = get_audio(sample_rate, chunk_size, 5)
                     while name == "":
@@ -147,17 +158,44 @@ def start_listening(frame, token):
                         date = get_audio(sample_rate, chunk_size, 5)
                     frame.user_speaks(date)
                     frame.assistant_speaks(task_service.add_task(name, date, token))
-                elif should_wake(SHOW_UNDONE_TASKS_WAKE, text):
+                elif should_wake(SHOW_UNDONE_TASKS, text):
                     frame.assistant_speaks(task_service.show_undone_tasks(token))
-                elif should_wake(SHOW_DONE_TASKS_WAKE, text):
+                elif should_wake(SHOW_DONE_TASKS, text):
                     frame.assistant_speaks(task_service.show_finished_tasks(token))
-                elif should_wake(MARK_TASK_AS_DONE_WAKE, text):
+                elif should_wake(MARK_TASK_AS_DONE, text):
                     frame.assistant_speaks("Zadanie o jakim numerze zrobiłeś?")
                     task_id = get_audio(sample_rate, chunk_size, 5)
                     while task_id == "":
                         frame.assistant_doesnt_understand()
                         task_id = get_audio(sample_rate, chunk_size, 5)
                     frame.assistant_speaks(task_service.mark_task_as_done(token, int(task_id)))
+                elif should_wake(SEND_MESSAGE, text):
+                    frame.assistant_speaks("Do kogo chcesz wysłać wiadomość")
+                    receiver = get_audio(sample_rate, chunk_size, 5)
+                    while receiver == "":
+                        frame.assistant_doesnt_understand()
+                        receiver = get_audio(sample_rate, chunk_size, 5)
+                    frame.user_speaks(receiver)
+                    frame.assistant_speaks("Podaj wiadomość: ")
+                    content = get_audio(sample_rate, chunk_size, 5)
+                    while content == "":
+                        frame.assistant_doesnt_understand()
+                        content = get_audio(sample_rate, chunk_size, 5)
+                    frame.user_speaks(content)
+                    frame.assistant_speaks(message_service.send_message(receiver, content, token))
+                elif should_wake(SHOW_MESSAGES, text):
+                    frame.assistant_speaks(message_service.show_sent_messages(token))
+                elif should_wake(SHOW_INBOX_READ, text):
+                    frame.assistant_speaks(message_service.show_read_messages(token))
+                elif should_wake(SHOW_INBOX_UNREAD, text):
+                    frame.assistant_speaks(message_service.show_unread_messages(token))
+                elif should_wake(MARK_MESSAGE_AS_READ, text):
+                    frame.assistant_speaks("Wiadomość o jakim numerzę przeczytałeś?")
+                    message_id = get_audio(sample_rate, chunk_size, 5)
+                    while message_id == "":
+                        frame.assistant_doesnt_understand()
+                        message_id = get_audio(sample_rate, chunk_size, 5)
+                    frame.assistant_speaks(message_service.mark_message_as_read(token, int(message_id)))
                 elif "stop" in text:
                     break
                 else:
