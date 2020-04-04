@@ -3,10 +3,12 @@ import requests
 import json_parser
 from selenium import webdriver
 import re
+import threading
 
 
 def is_wikipedia_page_exist(search_phrase):
-    response = requests.get('https://pl.wikipedia.org/wiki/' + str(search_phrase))
+    search = search_phrase.replace(" ", "_")
+    response = requests.get('https://pl.wikipedia.org/wiki/' + search)
     content = response.text
     soup = BeautifulSoup(content, "html.parser")
     try:
@@ -27,11 +29,10 @@ def search_in_google(search_phrase):
 
 def search_in_wikipedia(search_phrase):
     if not is_wikipedia_page_exist(search_phrase):
-        print("not find")
-        search_in_google(search_phrase)
-        return None
+        threading.Thread(target=search_in_google, args=([search_phrase]), daemon=True).start()
+        return "Oto wyniki wyszukiwania w google"
     else:
-        response = requests.get('https://pl.wikipedia.org/wiki/' + str(search_phrase))
+        response = requests.get('https://pl.wikipedia.org/wiki/' + str(search_phrase.replace(" ", "_")))
         content = response.text
         soup = BeautifulSoup(content, "html.parser")
         try:
@@ -45,6 +46,5 @@ def search_in_wikipedia(search_phrase):
             result = re.sub(r"\[\d\]", "", result)
             return result
         except Exception as e:
-            print(e)
-            search_in_google(search_phrase)
-            return None
+            threading.Thread(target=search_in_google, args=([search_phrase]), daemon=True).start()
+            return "Oto wyniki wyszukiwania w google"
