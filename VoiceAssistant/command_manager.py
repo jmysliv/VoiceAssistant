@@ -10,6 +10,7 @@ import event_service
 import task_service
 import coronavirus as corona
 import winsound
+import system_control
 
 CURIO_WAKE = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
 
@@ -33,6 +34,10 @@ MARK_TASK_AS_DONE_WAKE = ["dodaj zadanie do zrobionych", "oznacz zadanie jako zr
 YT_WAKE = ["Uruchom", "uruchom", "Włącz", "włącz", "wlacz"]
 
 CORONA_WAKE = ["koronawirus", "koronawirusie", "Korona wirusie", "korona wirus", "koronawirusa"]
+
+VOLUME_WAKE = ["głośność", "przycisz", "podgłośni", "dźwięk"]
+
+BRIGHTNESS_WAKE = ["jasność", "kontrast"]
 
 
 def get_audio(sample_rate, chunk_size, timeout):
@@ -96,6 +101,26 @@ def start_listening(frame, token):
                     winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
                 elif should_wake(CURIO_WAKE, text):
                     frame.assistant_speaks(curiosities.get_random_curio()['curio'])
+                elif should_wake(VOLUME_WAKE, text):
+                    frame.assistant_speaks("Na ile mam ustawić głośności?")
+                    time.sleep(1.5)
+                    voulme = get_audio(sample_rate, chunk_size, 5)
+                    while voulme == "":
+                        frame.assistant_doesnt_understand()
+                        voulme = get_audio(sample_rate, chunk_size, 5)
+                    frame.user_speaks(voulme)
+                    system_control.set_volume(int(voulme))
+                    frame.assistant_speaks("Zrobione")
+                elif should_wake(BRIGHTNESS_WAKE, text):
+                    frame.assistant_speaks("Na ile mam ustawić kontrast?")
+                    time.sleep(1.5)
+                    brightness = get_audio(sample_rate, chunk_size, 5)
+                    while brightness == "":
+                        frame.assistant_doesnt_understand()
+                        brightness = get_audio(sample_rate, chunk_size, 5)
+                    frame.user_speaks(brightness)
+                    system_control.set_brightness(int(brightness))
+                    frame.assistant_speaks("Zrobione")
                 elif should_wake(YT_WAKE, text) :
                     driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
                     driver.maximize_window()

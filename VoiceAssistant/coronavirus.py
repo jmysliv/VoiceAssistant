@@ -33,4 +33,5 @@ def get_data_about_corona(text):
 
     except Exception as e:
         print(e)
+        return "Niestety nie udało się znaleźć informacji dla podanego kraju"
         pass

@@ -17,7 +17,6 @@ def login(username, password):
     data = {'username': username,
             'password': password}
     response = requests.post(API_ENDPOINT, data=data)
-
     if response.status_code == 400:
         return "Niepoprawne dane logowania", ""
     elif response.status_code == 200:
@@ -25,5 +24,3 @@ def login(username, password):
         return "ok", token
     else:
         return "Nie mozna się zalogować", ""
-
-
