@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
-import json_parser
+from services import json_parser
 from selenium import webdriver
 import re
 import threading

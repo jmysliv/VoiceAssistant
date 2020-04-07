@@ -1,17 +1,9 @@
 import speech_recognition as sr
 from selenium import webdriver
 import time
-import jokes
-import curiosities
-import json_parser
-import wikipedia
-import weather
-import event_service
-import task_service
-import coronavirus as corona
+from services import coronavirus as corona, curiosities, event_service, jokes, json_parser, message_service, \
+    system_control, task_service, weather, wikipedia
 import winsound
-import system_control
-import message_service
 
 CURIO = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
 
@@ -78,7 +70,7 @@ def should_wake(wake_arr, text):
 
 
 def start_listening(frame, token):
-    wake = "Zbyszek"
+    wake = "Janusz"
     sample_rate = 48000
     chunk_size = 2048
     # mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"

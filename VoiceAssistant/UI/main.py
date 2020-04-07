@@ -40,7 +40,7 @@ class Main(tk.Tk):
             self.geometry("{}x{}+{}+{}".format(400, 250, x_cord, y_cord))
         if page_name == "HomePage":
             self.geometry("{}x{}+{}+{}".format(800, 600, x_cord, y_cord))
-            frame.assistant_speaks(message="Witaj {}, mów do mnie Zbyszek, w czym Ci mogę pomóc ???".format(args[0]))
+            frame.assistant_speaks(message="Witaj {}, mów do mnie Janusz, w czym Ci mogę pomóc ???".format(args[0]))
             threading.Thread(target=command_manager.start_listening, args=([frame, args[1]]), daemon=True).start()
 
 

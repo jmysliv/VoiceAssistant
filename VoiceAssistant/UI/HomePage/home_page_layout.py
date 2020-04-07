@@ -1,5 +1,5 @@
 import tkinter as tk
-import text_to_speech
+from services import text_to_speech
 import threading
 
 
