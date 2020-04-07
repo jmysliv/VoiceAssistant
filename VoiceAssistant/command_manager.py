@@ -78,7 +78,7 @@ def should_wake(wake_arr, text):
 
 
 def start_listening(frame, token):
-    wake = "Zbyszek"
+    wake = "Janusz"
     sample_rate = 48000
     chunk_size = 2048
     # mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"
