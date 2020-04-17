@@ -1,5 +1,6 @@
 import requests
 import datetime
+from speech_recognizer import get_audio
 
 
 API_ENDPOINT = "http://46.101.198.229:6000/tasks/"
@@ -90,3 +91,37 @@ def mark_task_as_done(token, id):
         return "Zaktualizowano zadanie"
     else:
         return "Nie udało się zaktualizować zadania"
+
+
+def add_task_wake_function(frame, text, token):
+    frame.assistant_speaks("Podaj nazwę zadania")
+    name = get_audio(5)
+    while name == "":
+        frame.assistant_doesnt_understand()
+        name = get_audio(5)
+    frame.user_speaks(name)
+    frame.assistant_speaks("Podaj date(w formacie: dzień miesiąc rok czas)")
+    date = get_audio(5)
+    while date == "":
+        frame.assistant_doesnt_understand()
+        date = get_audio(5)
+    frame.user_speaks(date)
+    frame.assistant_speaks(add_task(name, date, token))
+
+
+def show_undone_task_wake_function(frame, text, token):
+    frame.assistant_speaks(show_undone_tasks(token))
+
+
+def show_done_task_wake_function(frame, text, token):
+    frame.assistant_speaks(show_finished_tasks(token))
+
+
+def mark_task_wake_function(frame, text, token):
+    frame.assistant_speaks("Zadanie o jakim numerze zrobiłeś?")
+    task_id = get_audio(5)
+    while task_id == "":
+        frame.assistant_doesnt_understand()
+        task_id = get_audio(5)
+    frame.assistant_speaks(mark_task_as_done(token, int(task_id)))
+

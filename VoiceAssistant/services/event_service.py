@@ -1,5 +1,6 @@
 import requests
 import datetime
+from speech_recognizer import get_audio
 
 API_ENDPOINT = "http://46.101.198.229:6000/events/"
 
@@ -65,3 +66,23 @@ def show_events(token):
         return parse_events_list(response.json())
     else:
         return "Nie udało się pobrać wydarzeń"
+
+
+def add_event_wake_function(frame, text, token):
+    frame.assistant_speaks("Podaj nazwę wydarzenia")
+    name = get_audio(5)
+    while name == "":
+        frame.assistant_doesnt_understand()
+        name = get_audio(5)
+    frame.user_speaks(name)
+    frame.assistant_speaks("Podaj date(w formacie: dzień miesiąc rok czas)")
+    date = get_audio(5)
+    while date == "":
+        frame.assistant_doesnt_understand()
+        date = get_audio(5)
+    frame.user_speaks(date)
+    frame.assistant_speaks(add_event(name, date, token))
+
+
+def show_events_wake_functions(frame, text, token):
+    frame.assistant_speaks(show_events(token))

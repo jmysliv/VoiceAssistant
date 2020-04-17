@@ -1,7 +1,8 @@
 import requests
 import json
 from googletrans import Translator
-
+import time
+from speech_recognizer import get_audio
 
 def num_to_month(num):
     with open('.././json_files/months.json', 'r') as f:
@@ -33,3 +34,14 @@ def get_data_about_corona(text):
 
     except IndexError:
         return "Niestety nie udało się znaleźć informacji dla podanego kraju"
+
+
+def coronavirus_wake_function(frame, *rest):
+    frame.assistant_speaks("Podaj kraj dla którego chciałbyś otrzymać informacje ?")
+    time.sleep(1.5)
+    country_name = get_audio(5)
+    while country_name == "":
+        frame.assistant_doesnt_understand()
+        country_name = get_audio(5)
+    frame.user_speaks(country_name)
+    frame.assistant_speaks(get_data_about_corona(country_name))

@@ -42,10 +42,10 @@ def get_random_joke():
     return jokes[index]
 
 
-def wake_function(frame, text):
-    if len(jokes.jokes) == 0:
+def wake_function(frame, *rest):
+    if len(jokes) == 0:
         frame.assistant_speaks("Chwileczkę...")
-    joke = jokes.get_random_joke()
+    joke = get_random_joke()
     frame.assistant_speaks(joke['first_part'])
     time.sleep(5)
     frame.assistant_speaks(joke['second_part'])

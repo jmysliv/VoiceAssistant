@@ -51,3 +51,11 @@ def prepare_weather_string(response):
     translator = Translator()
     translate = translator.translate(english, src='en', dest='pl')
     return translate.text
+
+
+def weather_wake_function(frame, text, *rest):
+    weather_condition = check_weather(text)
+    if weather_condition is None:
+        frame.assistant_speaks("Niestety nie udało mi się znaleźć pogody dla podanego miejsca")
+    else:
+        frame.assistant_speaks(weather_condition)

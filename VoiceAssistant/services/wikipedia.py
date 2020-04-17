@@ -51,3 +51,7 @@ def search_in_wikipedia(search_phrase):
         except TypeError:
             threading.Thread(target=search_in_google, args=([search_phrase]), daemon=True).start()
             return "Oto wyniki wyszukiwania w google"
+
+
+def wikipedia_wake_function(frame, old_text, *rest):
+    frame.assistant_speaks(search_in_wikipedia(old_text))
