@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, "../../VoiceAssistant")
 import tkinter as tk
 from tkinter import font as tk_font
 import command_manager
