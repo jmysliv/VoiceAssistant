@@ -1,9 +1,16 @@
 import speech_recognition as sr
 from selenium import webdriver
 import time
+from UI.main import isLinux
 from services import coronavirus as corona, curiosities, event_service, jokes, json_parser, message_service, \
-    system_control, task_service, weather, wikipedia
-import winsound
+    task_service, weather, wikipedia
+if not isLinux:
+    import winsound
+    import system_control_win
+else:
+    import os
+    import alsaaudio
+
 
 CURIO = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
 
@@ -102,7 +109,10 @@ def start_listening(frame, token):
                     time.sleep(5)
                     frame.assistant_speaks(joke['second_part'])
                     time.sleep(1)
-                    winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
+                    if isLinux:
+                        os.system(f'aplay .././sounds/joke.wav')
+                    else:
+                        winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
                 elif should_wake(CURIO, text):
                     frame.assistant_speaks(curiosities.get_random_curio()['curio'])
                 elif should_wake(VOLUME_WAKE, text):
@@ -113,7 +123,11 @@ def start_listening(frame, token):
                         frame.assistant_doesnt_understand()
                         voulme = get_audio(sample_rate, chunk_size, 5)
                     frame.user_speaks(voulme)
-                    system_control.set_volume(int(voulme))
+                    if isLinux:
+                        m = alsaaudio.Mixer()
+                        m.setvolume(int(voulme))
+                    else :
+                        system_control_win.set_volume(int(voulme))
                     frame.assistant_speaks("Zrobione")
                 elif should_wake(BRIGHTNESS_WAKE, text):
                     frame.assistant_speaks("Na ile mam ustawić kontrast?")
@@ -123,7 +137,11 @@ def start_listening(frame, token):
                         frame.assistant_doesnt_understand()
                         brightness = get_audio(sample_rate, chunk_size, 5)
                     frame.user_speaks(brightness)
-                    system_control.set_brightness(int(brightness))
+                    if isLinux:
+                        connected_displays = os.popen('xrandr | grep " connected" | cut -f1 -d " "').read()
+                        os.system("xrandr --output {} --brightness {}".format(connected_displays.splitlines()[0],float(brightness / 100)))
+                    else:
+                        system_control_win.set_brightness(int(brightness))
                     frame.assistant_speaks("Zrobione")
                 elif should_wake(YT, text) :
                     driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
