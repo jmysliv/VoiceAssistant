@@ -46,7 +46,7 @@ def parse_tasks_list(response, is_done):
 def add_task(name, date_string, token):
     try:
         date = datetime.datetime.strptime(parse_months_name(date_string), '%d/%m/%Y %H:%M')
-    except:
+    except ValueError:
         return "Podana data jest nieprawidłowa"
 
     data = {'task_name': name,

@@ -9,8 +9,8 @@ def speak(text):
         engine = pyttsx3.init()
         engine.say(text)
         engine.runAndWait()
-    except Exception as e:
-        print(e)
+    except RuntimeError:
+        pass
 
 
 def insert_newlines(string, every=64):

@@ -7,7 +7,7 @@ import json
 def check_weather(text):
     city = find_city_in_string(text)
     if city is None:
-        country = find_country_instring(text)
+        country = find_country_in_string(text)
         if country is None:
             return None
         response = requests.get('http://api.openweathermap.org/data/2.5/weather?q=' + str(country) + '&APPID=caeadda0fd761bace210ea2cd08bf167')
@@ -31,7 +31,7 @@ def find_city_in_string(text):
         pass
 
 
-def find_country_instring(text):
+def find_country_in_string(text):
     try:
         translator = Translator()
         translate = translator.translate(text, src='pl', dest='en')

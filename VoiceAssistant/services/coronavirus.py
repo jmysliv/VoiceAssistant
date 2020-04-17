@@ -31,7 +31,5 @@ def get_data_about_corona(text):
                "liczba osób wyzdrowiałych wynosi {}"\
             .format(day, month, year, content["latest"]["confirmed"], content["latest"]["deaths"], content["latest"]["recovered"])
 
-    except Exception as e:
-        print(e)
+    except IndexError:
         return "Niestety nie udało się znaleźć informacji dla podanego kraju"
-        pass
