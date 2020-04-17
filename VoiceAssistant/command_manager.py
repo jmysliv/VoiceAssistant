@@ -4,6 +4,7 @@ import time
 from services import coronavirus as corona, curiosities, event_service, jokes, json_parser, message_service, \
     system_control, task_service, weather, wikipedia
 import winsound
+import service
 
 CURIO = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
 
@@ -43,7 +44,7 @@ VOLUME_WAKE = ["głośność", "przycisz", "podgłośni", "dźwięk"]
 BRIGHTNESS_WAKE = ["jasność", "kontrast"]
 
 
-def get_audio(sample_rate, chunk_size, timeout):
+def get_audio(timeout, sample_rate=48000, chunk_size=2048):
     r = sr.Recognizer()
     with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_size) as source:
         r.adjust_for_ambient_noise(source)
@@ -71,8 +72,6 @@ def should_wake(wake_arr, text):
 
 def start_listening(frame, token):
     wake = "Janusz"
-    sample_rate = 48000
-    chunk_size = 2048
     # mic_name = "USB Device 0x46d:0x825: Audio (hw:1, 0)"
     # mic_list = sr.Microphone.list_microphone_names()
     #
@@ -82,38 +81,43 @@ def start_listening(frame, token):
 
     while True:
         print("Listening")
-        text = get_audio(sample_rate, chunk_size, 2)
+        text = get_audio(2)
+        services = service.create_services()
 
         if text.count(wake) > 0:
             frame.assistant_listening()
-            text = get_audio(sample_rate, chunk_size, 5)
+            text = get_audio(5)
             while text == "":
                 frame.assistant_doesnt_understand()
-                text = get_audio(sample_rate, chunk_size, 5)
+                text = get_audio(5)
             frame.user_speaks(text)
             old_text = text
             text = text.lower()
             try:
-                if should_wake(JOKES, text):
-                    if len(jokes.jokes) == 0:
-                        frame.assistant_speaks("Chwileczkę...")
-                    joke = jokes.get_random_joke()
-                    frame.assistant_speaks(joke['first_part'])
-                    time.sleep(5)
-                    frame.assistant_speaks(joke['second_part'])
-                    time.sleep(1)
-                    winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
-                elif should_wake(CURIO, text):
-                    frame.assistant_speaks(curiosities.get_random_curio()['curio'])
+                if 1:
+                    for s in services:
+                        if should_wake(s.wake_words, text):
+                            s.wake_function(frame)
+                # if should_wake(JOKES, text):
+                #     if len(jokes.jokes) == 0:
+                #         frame.assistant_speaks("Chwileczkę...")
+                #     joke = jokes.get_random_joke()
+                #     frame.assistant_speaks(joke['first_part'])
+                #     time.sleep(5)
+                #     frame.assistant_speaks(joke['second_part'])
+                #     time.sleep(1)
+                #     winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
+                # elif should_wake(CURIO, text):
+                #     frame.assistant_speaks(curiosities.get_random_curio()['curio'])
                 elif should_wake(VOLUME_WAKE, text):
                     frame.assistant_speaks("Na ile mam ustawić głośności?")
                     time.sleep(1.5)
-                    voulme = get_audio(sample_rate, chunk_size, 5)
-                    while voulme == "":
+                    volume = get_audio(sample_rate, chunk_size, 5)
+                    while volume == "":
                         frame.assistant_doesnt_understand()
-                        voulme = get_audio(sample_rate, chunk_size, 5)
-                    frame.user_speaks(voulme)
-                    system_control.set_volume(int(voulme))
+                        volume = get_audio(sample_rate, chunk_size, 5)
+                    frame.user_speaks(volume)
+                    system_control.set_volume(int(volume))
                     frame.assistant_speaks("Zrobione")
                 elif should_wake(BRIGHTNESS_WAKE, text):
                     frame.assistant_speaks("Na ile mam ustawić kontrast?")
@@ -125,7 +129,7 @@ def start_listening(frame, token):
                     frame.user_speaks(brightness)
                     system_control.set_brightness(int(brightness))
                     frame.assistant_speaks("Zrobione")
-                elif should_wake(YT, text) :
+                elif should_wake(YT, text):
                     driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
                     driver.maximize_window()
                     driver.get("https://www.youtube.com/?hl=pl&gl=PL")

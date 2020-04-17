@@ -1,6 +1,7 @@
 import time
 import ctypes
 import wmi
+from command_manager import get_audio
 
 SendInput = ctypes.windll.user32.SendInput
 
@@ -95,3 +96,15 @@ def set_volume(volume):
 
 def set_brightness(brightness):
     wmi.WMI(namespace='wmi').WmiMonitorBrightnessMethods()[0].WmiSetBrightness(brightness, 0)
+
+
+def volume_wake_function(frame, text):
+    frame.assistant_speaks("Na ile mam ustawić głośności?")
+    time.sleep(1.5)
+    volume = get_audio(5)
+    while volume == "":
+        frame.assistant_doesnt_understand()
+        volume = get_audio(5)
+    frame.user_speaks(volume)
+    set_volume(int(volume))
+    frame.assistant_speaks("Zrobione")

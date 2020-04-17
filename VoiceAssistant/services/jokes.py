@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 import random
+import time
+import winsound
 
 jokes = []
 
@@ -35,4 +37,12 @@ def get_random_joke():
     return jokes[index]
 
 
-
+def wake_function(frame, text):
+    if len(jokes) == 0:
+        frame.assistant_speaks("Chwileczkę...")
+    joke = get_random_joke()
+    frame.assistant_speaks(joke['first_part'])
+    time.sleep(5)
+    frame.assistant_speaks(joke['second_part'])
+    time.sleep(1)
+    winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)

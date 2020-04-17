@@ -53,3 +53,7 @@ def get_random_curio():
     get_curiosities()
     index = random.randint(0, len(curiosities))
     return curiosities[index]
+
+
+def wake_function(frame, text):
+    frame.assistant_speaks(get_random_curio()['curio'])
