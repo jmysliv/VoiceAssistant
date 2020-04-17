@@ -1,10 +1,17 @@
-import speech_recognition as sr
+from speech_recognizer import get_audio
 from selenium import webdriver
 import time
-from services import coronavirus as corona, curiosities, event_service, jokes, json_parser, message_service, \
-    system_control, task_service, weather, wikipedia
+from UI.main import isLinux
+from services import coronavirus as corona, curiosities, event_service, jokes, json_parser, message_service, system_control,\
+    task_service, weather, wikipedia
 import winsound
 import service
+if not isLinux:
+    import winsound
+else:
+    import os
+    import alsaaudio
+
 
 CURIO = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
 
@@ -44,23 +51,6 @@ VOLUME_WAKE = ["głośność", "przycisz", "podgłośni", "dźwięk"]
 BRIGHTNESS_WAKE = ["jasność", "kontrast"]
 
 
-def get_audio(timeout, sample_rate=48000, chunk_size=2048):
-    r = sr.Recognizer()
-    with sr.Microphone(device_index=0, sample_rate=sample_rate, chunk_size=chunk_size) as source:
-        r.adjust_for_ambient_noise(source)
-        try:
-            audio = r.listen(source, timeout=timeout)
-            text = r.recognize_google(audio, language="pl-PL")
-            return text
-        except sr.UnknownValueError:
-            print("Google Speech Recognition could not understand audio")
-            return ""
-        except sr.WaitTimeoutError as e:
-            print(e)
-            return ""
-        except sr.RequestError as e:
-            print("Could not request results from Google Speech Recognition service;{0}".format(e))
-            return ""
 
 
 def should_wake(wake_arr, text):
@@ -97,7 +87,7 @@ def start_listening(frame, token):
                 if 1:
                     for s in services:
                         if should_wake(s.wake_words, text):
-                            s.wake_function(frame)
+                            s.wake_function(frame, text)
                 # if should_wake(JOKES, text):
                 #     if len(jokes.jokes) == 0:
                 #         frame.assistant_speaks("Chwileczkę...")
@@ -106,28 +96,39 @@ def start_listening(frame, token):
                 #     time.sleep(5)
                 #     frame.assistant_speaks(joke['second_part'])
                 #     time.sleep(1)
-                #     winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
+                #     if isLinux:
+                #         os.system(f'aplay .././sounds/joke.wav')
+                #     else:
+                #         winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
                 # elif should_wake(CURIO, text):
                 #     frame.assistant_speaks(curiosities.get_random_curio()['curio'])
-                elif should_wake(VOLUME_WAKE, text):
-                    frame.assistant_speaks("Na ile mam ustawić głośności?")
-                    time.sleep(1.5)
-                    volume = get_audio(sample_rate, chunk_size, 5)
-                    while volume == "":
-                        frame.assistant_doesnt_understand()
-                        volume = get_audio(sample_rate, chunk_size, 5)
-                    frame.user_speaks(volume)
-                    system_control.set_volume(int(volume))
-                    frame.assistant_speaks("Zrobione")
+                # elif should_wake(VOLUME_WAKE, text):
+                #     frame.assistant_speaks("Na ile mam ustawić głośności?")
+                #     time.sleep(1.5)
+                #     voulme = get_audio(5)
+                #     while voulme == "":
+                #         frame.assistant_doesnt_understand()
+                #         voulme = get_audio(5)
+                #     frame.user_speaks(voulme)
+                #     if isLinux:
+                #         m = alsaaudio.Mixer()
+                #         m.setvolume(int(voulme))
+                #     else:
+                #         system_control_win.set_volume(int(voulme))
+                #     frame.assistant_speaks("Zrobione")
                 elif should_wake(BRIGHTNESS_WAKE, text):
                     frame.assistant_speaks("Na ile mam ustawić kontrast?")
                     time.sleep(1.5)
-                    brightness = get_audio(sample_rate, chunk_size, 5)
+                    brightness = get_audio(5)
                     while brightness == "":
                         frame.assistant_doesnt_understand()
-                        brightness = get_audio(sample_rate, chunk_size, 5)
+                        brightness = get_audio(5)
                     frame.user_speaks(brightness)
-                    system_control.set_brightness(int(brightness))
+                    if isLinux:
+                        connected_displays = os.popen('xrandr | grep " connected" | cut -f1 -d " "').read()
+                        os.system("xrandr --output {} --brightness {}".format(connected_displays.splitlines()[0],float(brightness / 100)))
+                    else:
+                        system_control.set_brightness(int(brightness))
                     frame.assistant_speaks("Zrobione")
                 elif should_wake(YT, text):
                     driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
@@ -143,40 +144,40 @@ def start_listening(frame, token):
                 elif should_wake(CORONA, text):
                     frame.assistant_speaks("Podaj kraj dla którego chciałbyś otrzymać informacje ?")
                     time.sleep(1.5)
-                    country_name = get_audio(sample_rate, chunk_size, 5)
+                    country_name = get_audio(5)
                     while country_name == "":
                         frame.assistant_doesnt_understand()
-                        country_name = get_audio(sample_rate, chunk_size, 5)
+                        country_name = get_audio(5)
                     frame.user_speaks(country_name)
                     frame.assistant_speaks(corona.get_data_about_corona(country_name))
                 elif should_wake(ADD_EVENT, text):
                     frame.assistant_speaks("Podaj nazwę wydarzenia")
-                    name = get_audio(sample_rate, chunk_size, 5)
+                    name = get_audio(5)
                     while name == "":
                         frame.assistant_doesnt_understand()
-                        name = get_audio(sample_rate, chunk_size, 5)
+                        name = get_audio(5)
                     frame.user_speaks(name)
                     frame.assistant_speaks("Podaj date(w formacie: dzień miesiąc rok czas)")
-                    date = get_audio(sample_rate, chunk_size, 5)
+                    date = get_audio(5)
                     while date == "":
                         frame.assistant_doesnt_understand()
-                        date = get_audio(sample_rate, chunk_size, 5)
+                        date = get_audio(5)
                     frame.user_speaks(date)
                     frame.assistant_speaks(event_service.add_event(name, date, token))
                 elif should_wake(SHOW_EVENTS, text):
                     frame.assistant_speaks(event_service.show_events(token))
                 elif should_wake(ADD_TASK, text):
                     frame.assistant_speaks("Podaj nazwę zadania")
-                    name = get_audio(sample_rate, chunk_size, 5)
+                    name = get_audio(5)
                     while name == "":
                         frame.assistant_doesnt_understand()
-                        name = get_audio(sample_rate, chunk_size, 5)
+                        name = get_audio(5)
                     frame.user_speaks(name)
                     frame.assistant_speaks("Podaj date(w formacie: dzień miesiąc rok czas)")
-                    date = get_audio(sample_rate, chunk_size, 5)
+                    date = get_audio(5)
                     while date == "":
                         frame.assistant_doesnt_understand()
-                        date = get_audio(sample_rate, chunk_size, 5)
+                        date = get_audio(5)
                     frame.user_speaks(date)
                     frame.assistant_speaks(task_service.add_task(name, date, token))
                 elif should_wake(SHOW_UNDONE_TASKS, text):
@@ -185,23 +186,23 @@ def start_listening(frame, token):
                     frame.assistant_speaks(task_service.show_finished_tasks(token))
                 elif should_wake(MARK_TASK_AS_DONE, text):
                     frame.assistant_speaks("Zadanie o jakim numerze zrobiłeś?")
-                    task_id = get_audio(sample_rate, chunk_size, 5)
+                    task_id = get_audio(5)
                     while task_id == "":
                         frame.assistant_doesnt_understand()
-                        task_id = get_audio(sample_rate, chunk_size, 5)
+                        task_id = get_audio(5)
                     frame.assistant_speaks(task_service.mark_task_as_done(token, int(task_id)))
                 elif should_wake(SEND_MESSAGE, text):
                     frame.assistant_speaks("Do kogo chcesz wysłać wiadomość")
-                    receiver = get_audio(sample_rate, chunk_size, 5)
+                    receiver = get_audio(5)
                     while receiver == "":
                         frame.assistant_doesnt_understand()
-                        receiver = get_audio(sample_rate, chunk_size, 5)
+                        receiver = get_audio(5)
                     frame.user_speaks(receiver)
                     frame.assistant_speaks("Podaj wiadomość: ")
-                    content = get_audio(sample_rate, chunk_size, 5)
+                    content = get_audio(5)
                     while content == "":
                         frame.assistant_doesnt_understand()
-                        content = get_audio(sample_rate, chunk_size, 5)
+                        content = get_audio(5)
                     frame.user_speaks(content)
                     frame.assistant_speaks(message_service.send_message(receiver, content, token))
                 elif should_wake(SHOW_MESSAGES, text):
@@ -212,10 +213,10 @@ def start_listening(frame, token):
                     frame.assistant_speaks(message_service.show_unread_messages(token))
                 elif should_wake(MARK_MESSAGE_AS_READ, text):
                     frame.assistant_speaks("Wiadomość o jakim numerzę przeczytałeś?")
-                    message_id = get_audio(sample_rate, chunk_size, 5)
+                    message_id = get_audio(5)
                     while message_id == "":
                         frame.assistant_doesnt_understand()
-                        message_id = get_audio(sample_rate, chunk_size, 5)
+                        message_id = get_audio(5)
                     frame.assistant_speaks(message_service.mark_message_as_read(token, int(message_id)))
                 elif "stop" in text:
                     break

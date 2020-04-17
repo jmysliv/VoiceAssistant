@@ -2,6 +2,10 @@ import time
 import ctypes
 import wmi
 from command_manager import get_audio
+import platform
+isLinux = 'Linux' == platform.system()
+if isLinux:
+    import alsaaudio
 
 SendInput = ctypes.windll.user32.SendInput
 
@@ -106,5 +110,9 @@ def volume_wake_function(frame, text):
         frame.assistant_doesnt_understand()
         volume = get_audio(5)
     frame.user_speaks(volume)
-    set_volume(int(volume))
+    if isLinux:
+        m = alsaaudio.Mixer()
+        m.setvolume(int(volume))
+    else:
+        set_volume(int(volume))
     frame.assistant_speaks("Zrobione")

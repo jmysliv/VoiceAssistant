@@ -1,5 +1,11 @@
+# add directory to path
 import sys
 sys.path.insert(0, "../../VoiceAssistant")
+
+# check operating system version
+import platform
+isLinux = 'Linux' == platform.system()
+
 import tkinter as tk
 from tkinter import font as tk_font
 import command_manager

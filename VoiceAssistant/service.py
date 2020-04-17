@@ -1,4 +1,4 @@
-from services import jokes, curiosities
+from services import jokes, curiosities, system_control
 
 
 class Service:
@@ -12,5 +12,5 @@ def create_services():
     services.append(Service(["suchar", "suchar", "żart", "dowcip"], jokes.wake_function))
     services.append(Service(["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"],
                             curiosities.wake_function))
-    services.append(Service(["głośność", "przycisz", "podgłośni", "dźwięk"], ))
+    services.append(Service(["głośność", "przycisz", "podgłośni", "dźwięk"], system_control.volume_wake_function))
     return services

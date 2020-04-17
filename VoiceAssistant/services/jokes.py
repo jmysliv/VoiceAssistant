@@ -2,7 +2,12 @@ from bs4 import BeautifulSoup
 import requests
 import random
 import time
-import winsound
+import platform
+isLinux = 'Linux' == platform.system()
+if not isLinux:
+    import winsound
+else:
+    import os
 
 jokes = []
 
@@ -38,11 +43,14 @@ def get_random_joke():
 
 
 def wake_function(frame, text):
-    if len(jokes) == 0:
+    if len(jokes.jokes) == 0:
         frame.assistant_speaks("Chwileczkę...")
-    joke = get_random_joke()
+    joke = jokes.get_random_joke()
     frame.assistant_speaks(joke['first_part'])
     time.sleep(5)
     frame.assistant_speaks(joke['second_part'])
     time.sleep(1)
-    winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
+    if isLinux:
+        os.system(f'aplay .././sounds/joke.wav')
+    else:
+        winsound.PlaySound('.././sounds/joke.wav', winsound.SND_FILENAME)
