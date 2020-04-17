@@ -36,7 +36,7 @@ def parse_events_list(response):
     events_string = ""
     for event in response:
         date = datetime.datetime.strptime(event['date'], '%Y-%m-%dT%H:%M:%SZ')
-        if  date > datetime.datetime.now():
+        if date > datetime.datetime.now():
             events_string = events_string + str(event['id']) + ". " + event['event_name'] + " zaplanowane na " + \
                             datetime.datetime.strftime(date, '%d/%m/%Y %H:%M') + "\n"
     return events_string
@@ -45,7 +45,7 @@ def parse_events_list(response):
 def add_event(name, date_string, token):
     try:
         date = datetime.datetime.strptime(parse_months_name(date_string), '%d/%m/%Y %H:%M')
-    except:
+    except ValueError:
         return "Podana data jest nieprawidłowa"
 
     data = {'event_name': name,

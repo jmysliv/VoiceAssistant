@@ -22,7 +22,9 @@ def get_jokes():
                     "second_part": second_part
                 }
                 jokes.append(joke)
-            except Exception as e:
+            except TypeError:
+                pass
+            except AttributeError:
                 pass
 
 

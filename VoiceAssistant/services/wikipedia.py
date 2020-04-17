@@ -15,7 +15,7 @@ def is_wikipedia_page_exist(search_phrase):
         result = soup.find('div', class_="plainlinks").b.text
         if result == 'W Wikipedii nie ma jeszcze artykułu o takiej nazwie. Możesz:':
             return False
-    except Exception as e:
+    except AttributeError:
         pass
     return True
 
@@ -45,6 +45,9 @@ def search_in_wikipedia(search_phrase):
             result = soup.find('div', class_="mw-parser-output").p.text
             result = re.sub(r"\[\d\]", "", result)
             return result
-        except Exception as e:
+        except AttributeError:
+            threading.Thread(target=search_in_google, args=([search_phrase]), daemon=True).start()
+            return "Oto wyniki wyszukiwania w google"
+        except TypeError:
             threading.Thread(target=search_in_google, args=([search_phrase]), daemon=True).start()
             return "Oto wyniki wyszukiwania w google"
