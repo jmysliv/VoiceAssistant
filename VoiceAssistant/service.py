@@ -5,11 +5,12 @@ from services import jokes, curiosities, system_control, json_parser, weather, c
 class Service:
     def __init__(self, wake_words, wake_function):
         self.wake_words = wake_words
-        self.wake_function = wake_function  # should take 2 arguments [frame, text]
+        self.wake_function = wake_function  # should take 3 arguments [frame, text, token]
 
 
 def stop(frame, *rest):
     frame.assistant_speaks("Miło, że mogłem pomóc. Do zobaczenia!")
+    #to do: close assistant
 
 def create_services():
     services = list()

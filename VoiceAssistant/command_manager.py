@@ -60,12 +60,12 @@ def should_wake(wake_arr, text):
 
 def start_listening(frame, token):
     wake = "Janusz"
+    services, last_service = service.create_services()
 
     while True:
         print("Listening")
         text = get_audio(2)
-        services, last_service = service.create_services()
-
+        
         if text.count(wake) > 0:
             frame.assistant_listening()
             text = get_audio(5)
