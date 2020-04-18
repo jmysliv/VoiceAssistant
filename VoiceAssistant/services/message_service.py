@@ -1,6 +1,6 @@
 import requests
 import datetime
-from speech_recognizer import get_audio
+from speech.speech_recognizer import get_audio
 
 API_ENDPOINT = "http://46.101.198.229:6000/messages/"
 API_ENDPOINT_INBOX = "http://46.101.198.229:6000/inbox/"

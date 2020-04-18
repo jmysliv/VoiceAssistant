@@ -1,3 +1,4 @@
+import time
 from services import jokes, curiosities, system_control, json_parser, weather, coronavirus, event_service, task_service, \
     message_service, wikipedia
 
@@ -8,9 +9,12 @@ class Service:
         self.wake_function = wake_function  # should take 3 arguments [frame, text, token]
 
 
-def stop(frame, *rest):
+def exit_assistant(frame, *rest):
     frame.assistant_speaks("Miło, że mogłem pomóc. Do zobaczenia!")
-    #to do: close assistant
+    time.sleep(3)
+    frame.quit()
+    exit()
+
 
 def create_services():
     services = list()
@@ -45,7 +49,7 @@ def create_services():
                             message_service.show_inbox_wake_function))
     services.append(Service(["oznacz wiadomość jako przeczytaną", "przeczytałem wiadomość"],
                             message_service.mark_message_wake_function))
-    services.append(Service(["stop", "zakończ", "narazie asysteńcie", "do widzenia asysteńcie"], stop))
+    services.append(Service(["stop", "zakończ", "na razie asystencie", "do widzenia asystencie"], exit_assistant))
 
     last_service = Service([], wikipedia.wikipedia_wake_function)
     return services, last_service

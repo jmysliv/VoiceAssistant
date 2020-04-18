@@ -60,7 +60,7 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
 
 Find the appropriate .whl file that matches your Python version (you can check your python version using ```python --version```) and put it in the directory where VoiceAssistant is located. Then you can install pyaudio using pip and run our assistant:
 ```bash
-    pip install <name of yout .whl file>.whl
+    pip install <name of your .whl file>.whl
     cd UI
     ../venv/Scripts/python main.py
 ```
@@ -75,12 +75,7 @@ Find the appropriate .whl file that matches your Python version (you can check y
     ../venv/bin/python3 main.py
 ```
 ## Adding new features
-If you enjoy idea of our project and you want to develop it, here is simple guide how to add new feature to our assistant.
-
-*Note thet if you need to recognize some additional speech in your service you need to import ```get_audio```, that takes one argument which is timeout in seconds*
-```python
-    from speech_recognizer import get_audio
-```
+*If you enjoy idea of our project and you want to develop it, here is simple guide how to add new feature to our assistant.*
 
 You have to create new Service class object, init function takes two arguments:
 
@@ -96,7 +91,7 @@ You have to create new Service class object, init function takes two arguments:
         * ```frame.assistant_speaks(message)``` as message you pass what you want the assistant to say.
         * ```frame.user_speaks(message)``` as message you pass what you want to be displayed as what you said.
         * ```frame.assistant_listening()``` if you want the assistant to mark that he listening. He will say "Słucham...". 
-        * ```frame.assistant_doesnt_understand()``` if you want the assistant to mark that he doesnt understand what user said. He will say "Nie rozumiem, możesz powtórzyć?". 
+        * ```frame.assistant_doesnt_understand()``` if you want the assistant to mark that he doesn't understand what user said. He will say "Nie rozumiem, możesz powtórzyć?". 
 
     * ```text``` it stores the phrase that user said.
 
@@ -118,6 +113,14 @@ Once you have ```wake_words``` and ```wake_function``` defined, you can create S
 ```python
     services.append(Service(wake_words, wake_function))
 ```
+
+*Note that if you need to recognize some additional speech in your service you need to import ```get_audio```, that takes one argument which is timeout in seconds*
+```python
+    from speech.speech_recognizer import get_audio
+```
+
+If you finished adding your service don't hesitate to make a pull request. Also if you notice something we missed, or discover some bug, feel free to open new issue, or simply fix it and make pull request.
+
 ## User Guide :heavy_exclamation_mark:
 
 *Here you can find information how to proper interact with our assistant, and what command is responsible for what feature.*

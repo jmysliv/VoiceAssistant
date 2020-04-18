@@ -2,7 +2,8 @@ import requests
 import json
 from googletrans import Translator
 import time
-from speech_recognizer import get_audio
+from speech.speech_recognizer import get_audio
+
 
 def num_to_month(num):
     with open('.././json_files/months.json', 'r') as f:
@@ -20,6 +21,8 @@ def get_data_about_corona(text):
         country = [country for country in countries if country['name'] == translate.text]
         country_code = country[0]['code']
         response = requests.get('https://coronavirus-tracker-api.herokuapp.com/v2/locations?country_code=' + str(country_code))
+        if response.status_code != 200:
+            return "Serwer na razie nie odpowiada, spróbuj później"
         content = json.loads(response.text)
         data = content["locations"][0]["last_updated"]
         data = data.split('-')
