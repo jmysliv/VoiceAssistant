@@ -11,17 +11,17 @@ Voice Assistant :information_desk_person::sound:
 
 Our idea was to create voice assistant similar to Google assistant but for desktop devices and in polish language. We decided that assistant will have the following features:
 
-+ [telling jokes](###telling-jokes) :joy:
-+ [finding curiosities](###finding-curiosities) :mortar_board:
-+ [playing YouTube videos](###playing-YouTube-videos) :tv:
-+ [searching phrase in both Wikipedia and Google](###searching-phrase-in-both-Wikipedia-and-Google) :mag_right:
-+ [checking current Covid-19 data](###checking-current-Covid-19-data) :skull:
-+ [planning events](###planning-events) :date:
-+ [sending and receiving messages with other users](###sending-and-receiving-messages-with-other-users) :incoming_envelope:
-+ [planning tasks](###planning-tasks) :calendar:
-+ [changing volume](###changing-volume) :mute:
-+ [checking current weather](###checking-current-weather) :cloud:
-+ [changing brightness of the screen](###changing-brightness-of-the-screen) :high_brightness:
++ [telling jokes](#joke) :joy:
++ [finding curiosities](#curiosities) :mortar_board:
++ [playing YouTube videos](#yt) :tv:
++ [searching phrase in both Wikipedia and Google](#wiki) :mag_right:
++ [checking current COVID-19 data](#covid) :skull:
++ [planning events](#events) :date:
++ [sending and receiving messages with other users](#message) :incoming_envelope:
++ [planning tasks](#tasks) :calendar:
++ [changing volume](#volume) :mute:
++ [checking current weather](#weather) :cloud:
++ [changing brightness of the screen](#brightness) :high_brightness:
 
 During implementation we used many libraries and frameworks, for instance:
 
@@ -35,8 +35,9 @@ While working on the project we learned how to properly configure python virtual
 ## Get Started :rocket:
 
 ### Install requirements :mega:
-All necessary libraries and packages are in file [requirements.txt](VoiceAssistant/requirements.txt)  
-Before running command below make sure that you have installed Python 3.7+ :snake: and you are in folder with [requirements.txt](VoiceAssistant/requirements.txt)
+All necessary libraries and packages are in file [requirements_windows.txt](VoiceAssistant/requirements_windows.txt) for windows operating system and in  [requirements_linux.txt](VoiceAssistant/requirements_linux.txt) for Linux.  
+Before running command below make sure that you have installed Python 3.7+ :snake: and you are in folder with requirement files.
+
 #### Windows :poop:
 ```bash
     cd VoiceAssistant
@@ -48,7 +49,6 @@ Before running command below make sure that you have installed Python 3.7+ :snak
     ../venv/Scripts/python main.py
 ```
 #### Linux :ok_hand:
-
 ```bash
     cd VoiceAssistant
     python3 -m venv venv
@@ -57,29 +57,29 @@ Before running command below make sure that you have installed Python 3.7+ :snak
     cd UI
     ../venv/bin/python3 main.py
 ```
-## User Guide
+## User Guide :heavy_exclamation_mark:
 
 *Here you can find information how to proper interact with our assistant, and what command is responsible for what feature.*
 
-### Telling jokes
+### Telling jokes <a id="joke"></a> :joy:
 *TO DO*
-### Finding curiosities
+### Finding curiosities <a id="curiosities"></a> :mortar_board:
 *TO DO*
-### Playing YouTube videos
+### Playing YouTube videos <a id="yt"></a>  :tv:
 *TO DO*
-### Searching phrase in both Wikipedia and Google
+### Searching phrase in both Wikipedia and Google <a id="wiki"></a> :mag_right:
 *TO DO*
-### Checking current Covid-19 data
+### Checking current COVID-19 data <a id="covid"></a> :skull:
 *TO DO*
-### Planning events
+### Planning events  <a id="events"></a> :date:
 *TO DO*
-### Sending and receiving messages with other users
+### Sending and receiving messages with other users  <a id="message"></a> :incoming_envelope:
 *TO DO*
-### Planning tasks
+### Planning tasks  <a id="tasks"></a> :calendar:
 *TO DO*
-### Changing volume
+### Changing volume  <a id="volume"></a> :mute:
 *TO DO*
-### Checking current weather
+### Checking current weather  <a id="weather"></a> :cloud:
 *TO DO*
-### Changing brightness of the screen
+### Changing brightness of the screen <a id="brightness"></a> :high_brightness:
 *TO DO*
