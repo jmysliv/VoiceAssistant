@@ -1,10 +1,5 @@
 from speech.speech_recognizer import get_audio
-from UI.main import isLinux
 import service
-if not isLinux:
-    pass
-else:
-    pass
 
 
 def should_wake(wake_arr, text):
