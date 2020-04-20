@@ -36,7 +36,7 @@ def brightness_wake_function(frame, *rest):
     if isLinux:
         connected_displays = os.popen('xrandr | grep " connected" | cut -f1 -d " "').read()
         os.system(
-            "xrandr --output {} --brightness {}".format(connected_displays.splitlines()[0], float(brightness / 100)))
+            "xrandr --output {} --brightness {}".format(connected_displays.splitlines()[0], float(int(brightness) / 100)))
     else:
         sc_win.set_brightness(int(brightness))
     frame.assistant_speaks("Zrobione")
