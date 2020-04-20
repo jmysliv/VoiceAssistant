@@ -78,6 +78,14 @@ Find the appropriate .whl file that matches your Python version (you can check y
     cd UI
     ../venv/bin/python3 main.py
 ```
+
+#### Install Chrome webdriver 
+This webdriver must be installed for the correct work of the voice assistant.  
+Choose the webdriver specific for your Chrome browser version from this [link](https://chromedriver.chromium.org/downloads).    
+If you have some problem with find your Chrome Browser version number this [link](https://help.zenplanner.com/hc/en-us/articles/204253654-How-to-Find-Your-Internet-Browser-Version-Number-Google-Chrome) will help you.    
+Next extract downloaded webdriver to [driver folder](VoiceAssistant/driver) and make sure that filename is "webdriver"
+
+
 ## Adding new features
 *If you enjoy idea of our project and you want to develop it, here is simple guide how to add new feature to our assistant.*
 
@@ -127,27 +135,58 @@ If you finished adding your service don't hesitate to make a pull request. Also 
 
 ## User Guide :heavy_exclamation_mark:
 
-*Here you can find information how to proper interact with our assistant, and what command is responsible for what feature.*
-
+*Here you can find information how to proper interact with our assistant, and what command is responsible for what feature.*  
+*At the beginning you have to wake your assistant, you can do it by saying **"Janusz"**,* 
+*this word mobilizes the assistant to act, and the assistant is waiting for your command to execute from now on.*
 ### Telling jokes <a id="joke"></a> :joy:
-*TO DO*
+```
+    wake_words = ["suchar", "suchar", "żart", "dowcip"]
+```
 ### Finding curiosities <a id="curiosities"></a> :mortar_board:
-*TO DO*
+```
+    wake_words = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
+```
 ### Playing YouTube videos <a id="yt"></a>  :tv:
-*TO DO*
-### Searching phrase in both Wikipedia and Google <a id="wiki"></a> :mag_right:
-*TO DO*
+```
+    wake_words = ["uruchom", "włącz", "puść"]
+```
 ### Checking current COVID-19 data <a id="covid"></a> :skull:
-*TO DO*
+```
+    wake_words = ["koronawirus", "koronawirusie", "korona wirusie", "korona wirus", "koronawirusa"]
+```
 ### Planning events  <a id="events"></a> :date:
-*TO DO*
+```
+    wake_words = ["dodaj wydarzenie", "dodaj nowe wydarzenie", "zaplanuj wydarzenie", "pokaż wydarzenia", "wyświetl wydarzenia",  
+     "jakie mam wydarzenia", "co mam zaplanowane", "co mam w planach"]
+```
 ### Sending and receiving messages with other users  <a id="message"></a> :incoming_envelope:
-*TO DO*
+```
+    wake_words = ["wyślij wiadomość", "napisz wiadomość", "pokaż wysłane wiadomości", "pokaż wiadomości które wysłałem", 
+    "pokaż przeczytane wiadomości", "pokaż stare wiadomości" "pokaż skrzynkę odbiorczą", "mam jakieś nowę wiadomości",
+    "pokaż nowe wiadomości", "oznacz wiadomość jako przeczytaną", "przeczytałem wiadomość"]
+```
 ### Planning tasks  <a id="tasks"></a> :calendar:
-*TO DO*
+```
+    wake_words = ["pokaż zadania do wykonania", "pokaż niezrobione zadania", "pokaż co mam do zrobienia", "co mam zrobić", 
+    "co jest do zrobienia", "pokaż co zrobiłem", "pokaż zrobione zadania", "co zrobiłem", "co już zrobiłem",  
+    "dodaj zadanie do zrobionych", "oznacz zadanie jako zrobione", "przenieś zadanie do zrobionych", 
+    "zrobiłem zadanie", "wykonałem zadanie"]
+```
 ### Changing volume  <a id="volume"></a> :mute:
-*TO DO*
+```
+    wake_words = ["głośność", "przycisz", "podgłośni", "dźwięk"]
+```
 ### Checking current weather  <a id="weather"></a> :cloud:
-*TO DO*
+```
+    wake_words = ["pogoda"]
+```
 ### Changing brightness of the screen <a id="brightness"></a> :high_brightness:
-*TO DO*
+```
+    wake_words = ["jasność", "kontrast"]
+```
+### Searching phrase in both Wikipedia and Google <a id="wiki"></a> :mag_right:
+```
+    wake_words = []
+```
+*If the given command doesn't match any of the above wake words, the given phrase will be searched in Wikipedia and the search results will be read by assistant,
+if it still gives unsuccessful result the command will be searched in Google and results will be displayed in the browser.*
