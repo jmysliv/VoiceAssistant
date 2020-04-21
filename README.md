@@ -89,14 +89,15 @@ Next extract downloaded webdriver to [driver folder](VoiceAssistant/driver) and 
 ## Adding new features
 *If you enjoy idea of our project and you want to develop it, here is simple guide how to add new feature to our assistant.*
 
-You have to create new Service class object, init function takes two arguments:
+You have to create new Python file in [services module](VoiceAssistant/services). Besides of implementation of your service, you should place inside your file two functions:
 
-1. ```wake_words``` is the array of phrases that you want the assistant to recognize, that will trigger execution of what you want your service to do. Note that all phrases should be lowercase. For example if you writing service for food ordering it could be something like that:
+1. ```get_wake_words()``` it should return the array of phrases that you want the assistant to recognize, that will trigger execution of what you want your service to do. Note that all phrases should be lowercase. Also make sure, that your wake words are unique and any of them isn't used by different service. For example if you writing service for food ordering, your function could look like that:
 ```python
-    wake_words = ["zamów jedzenie", "chce coś zjeść"]
+    def get_wake_words():
+        return ["zamów jedzenie", "chce coś zjeść"]
 ```
 
-2. ```wake_function``` is the function that will execute after assistant recognize one of your ```wake_words```. It takes three arguments:
+2. ```wake_function(frame, text, token)``` is the function that will execute after assistant recognize one of your ```wake_words```. It takes three arguments:
 
     * ```frame``` that is responsible for what you see on the screen and what the assistant says. You can use the following functions:
 
@@ -121,10 +122,6 @@ You have to create new Service class object, init function takes two arguments:
             order_food(food) #function that orders food
             frame.assistant_says("Zamówione")
     ```
-Once you have ```wake_words``` and ```wake_function``` defined, you can create Service object and append it to services list in ```create_services``` function inside [service.py](VoiceAssistant/service.py) file:
-```python
-    services.append(Service(wake_words, wake_function))
-```
 
 *Note that if you need to recognize some additional speech in your service you need to import ```get_audio```, that takes one argument which is timeout in seconds*
 ```python
