@@ -1,31 +1,21 @@
 import time
 from command_manager import get_audio
-import platform
 from UI.main import isLinux
 if isLinux:
-    import alsaaudio
     import os
 else:
-    import services.system_control_windows as sc_win
+    import wmi
 
 
-def volume_wake_function(frame, *rest):
-    frame.assistant_speaks("Na ile mam ustawić głośności?")
-    time.sleep(1.5)
-    volume = get_audio(5)
-    while volume == "":
-        frame.assistant_doesnt_understand()
-        volume = get_audio(5)
-    frame.user_speaks(volume)
-    if isLinux:
-        m = alsaaudio.Mixer()
-        m.setvolume(int(volume))
-    else:
-        sc_win.set_volume(int(volume))
-    frame.assistant_speaks("Zrobione")
+def set_brightness(brightness):
+    wmi.WMI(namespace='wmi').WmiMonitorBrightnessMethods()[0].WmiSetBrightness(brightness, 0)
 
 
-def brightness_wake_function(frame, *rest):
+def get_wake_words():
+    return ["jasność", "kontrast"]
+
+
+def wake_function(frame, *rest):
     frame.assistant_speaks("Na ile mam ustawić kontrast?")
     time.sleep(1.5)
     brightness = get_audio(5)
@@ -38,5 +28,5 @@ def brightness_wake_function(frame, *rest):
         os.system(
             "xrandr --output {} --brightness {}".format(connected_displays.splitlines()[0], float(int(brightness) / 100)))
     else:
-        sc_win.set_brightness(int(brightness))
+        set_brightness(int(brightness))
     frame.assistant_speaks("Zrobione")

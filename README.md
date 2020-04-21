@@ -119,7 +119,7 @@ You have to create new Service class object, init function takes two arguments:
                 food = get_audio(5)
             frame.user_speaks(food)
             order_food(food) #function that orders food
-            frame.assistant_saya("Zamówione")
+            frame.assistant_says("Zamówione")
     ```
 Once you have ```wake_words``` and ```wake_function``` defined, you can create Service object and append it to services list in ```create_services``` function inside [service.py](VoiceAssistant/service.py) file:
 ```python

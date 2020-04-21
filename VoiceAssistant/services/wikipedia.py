@@ -53,5 +53,9 @@ def search_in_wikipedia(search_phrase):
             return "Oto wyniki wyszukiwania w google"
 
 
-def wikipedia_wake_function(frame, old_text, *rest):
+def get_wake_words():
+    return []
+
+
+def wake_function(frame, old_text, *rest):
     frame.assistant_speaks(search_in_wikipedia(old_text))

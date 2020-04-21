@@ -30,7 +30,7 @@ def start_listening(frame, token):
                     if should_wake(s.wake_words, text):
                         s.wake_function(frame, text, token)
                         break
-                    if index + 1 == len(services):
+                    if index + 1 == len(services) and last_service is not None:
                         last_service.wake_function(frame, old_text, token)
 
             except Exception as e:

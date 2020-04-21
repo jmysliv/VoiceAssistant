@@ -46,7 +46,12 @@ def parse_json(json_path, driver, search):
 # driver.get("https://www.youtube.com/?hl=pl&gl=PL")
 # parse_json("./json_files/yt.json", driver, "despascito")
 
-def youtube_wake_function(frame, text, *rest):
+
+def get_wake_words():
+    return ["uruchom", "włącz", "puść"]
+
+
+def wake_function(frame, text, *rest):
     driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
     driver.maximize_window()
     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
