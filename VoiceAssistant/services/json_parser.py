@@ -6,6 +6,7 @@ from selenium.common.exceptions import TimeoutException
 import time
 from selenium.webdriver.support.wait import WebDriverWait
 import json
+from UI.main import isLinux
 
 
 def wait_to_end(s):
@@ -52,7 +53,10 @@ def get_wake_words():
 
 
 def wake_function(frame, text, *rest):
-    driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
+    if isLinux:
+        driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver")
+    else:
+        driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver.exe")
     driver.maximize_window()
     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
     parse_json(".././json_files/yt.json", driver, text.replace('uruchom', '').upper())

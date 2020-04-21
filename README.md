@@ -80,10 +80,11 @@ Find the appropriate .whl file that matches your Python version (you can check y
 ```
 
 #### Install Chrome webdriver 
-This webdriver must be installed for the correct work of the voice assistant.  
-Choose the webdriver specific for your Chrome browser version from this [link](https://chromedriver.chromium.org/downloads).    
-If you have some problem with find your Chrome Browser version number this [link](https://help.zenplanner.com/hc/en-us/articles/204253654-How-to-Find-Your-Internet-Browser-Version-Number-Google-Chrome) will help you.    
-Next extract downloaded webdriver to [driver folder](VoiceAssistant/driver) and make sure that filename is "webdriver"
+  
+You can find and download the Chrome webdriver from:
+https://chromedriver.chromium.org/downloads 
+Make sure it's appropriate for your Chrome Browser version. If you don't know your Chrome Browser version this [link](https://help.zenplanner.com/hc/en-us/articles/204253654-How-to-Find-Your-Internet-Browser-Version-Number-Google-Chrome) might be helpful.    
+Once you donloaded your driver, unzip it to [driver folder](VoiceAssistant/drivers) and make sure that filename is "chromedriver" ("chromedriver.exe" if you are using Windows).
 
 
 ## Adding new features
@@ -113,14 +114,14 @@ You have to create new Python file in [services module](VoiceAssistant/services)
     For example if you writing service for food ordering your wake function could look like that:
     ```python
         def wake_function(frame, text, token):
-            frame.assistant_says("Co chcesz zjeść?")
+            frame.assistant_speaks("Co chcesz zjeść?")
             food = get_audio(5)
             while food == "":
                 frame.assistant_doesnt_understand()
                 food = get_audio(5)
             frame.user_speaks(food)
             order_food(food) #function that orders food
-            frame.assistant_says("Zamówione")
+            frame.assistant_speaks("Zamówione")
     ```
 
 *Note that if you need to recognize some additional speech in your service you need to import ```get_audio```, that takes one argument which is timeout in seconds*

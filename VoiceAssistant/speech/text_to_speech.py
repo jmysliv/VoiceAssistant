@@ -1,5 +1,6 @@
 import re
 import pyttsx3
+import time
 
 
 def speak(text):
@@ -10,7 +11,8 @@ def speak(text):
         engine.say(text)
         engine.runAndWait()
     except RuntimeError:
-        pass
+        time.sleep(2)
+        speak(text)
 
 
 def insert_newlines(string, every=64):
