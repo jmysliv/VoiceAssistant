@@ -56,7 +56,7 @@ def get_random_curio():
 
 
 def get_wake_words():
-    return ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
+    return ["ciekawostki", "ciekawego", "ciekawostka", "ciekawostkę"]
 
 
 def wake_function(frame, *rest):

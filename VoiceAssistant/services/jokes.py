@@ -43,7 +43,7 @@ def get_random_joke():
 
 
 def get_wake_words():
-    return ["suchar", "suchar", "żart", "dowcip"]
+    return ["suchar", "żart", "dowcip"]
 
 
 def wake_function(frame, *rest):

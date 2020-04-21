@@ -21,6 +21,12 @@ def start_listening(frame, token):
         time.sleep(11)
         frame.quit()
         return
+    except ValueError as e:
+        time.sleep(3)
+        frame.assistant_speaks(str(e))
+        time.sleep(11)
+        frame.quit()
+        return
 
     while True:
         text = get_audio(2)
