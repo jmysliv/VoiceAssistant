@@ -1,5 +1,4 @@
 #!/bin/bash
-
 cd VoiceAssistant
 python3 -m venv venv
 source venv/bin/activate
@@ -8,5 +7,3 @@ sudo apt-get install libasound-dev portaudio19-dev libportaudio2 libportaudiocpp
 sudo apt-get install ffmpeg libav-tools
 sudo apt-get update & sudo apt-get install espeak & sudo apt-get install python3-tk
 pip install -r requirements_linux.txt
-cd UI
-../venv/bin/python3 main.py
