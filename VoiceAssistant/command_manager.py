@@ -1,5 +1,6 @@
 from speech.speech_recognizer import get_audio
 import service
+import time
 
 
 def should_wake(wake_arr, text):
@@ -11,7 +12,21 @@ def should_wake(wake_arr, text):
 
 def start_listening(frame, token):
     wake = "Janusz"
-    services, last_service = service.create_services()
+    try:
+        services, last_service = service.create_services()
+    except AttributeError:
+        time.sleep(3)
+        frame.assistant_speaks("Jeden z dodanych serwisów, nie ma zdefiniowanych wymaganych funkcji. "
+                             "Aby korzystać z asystenta napraw ten błąd.")
+        time.sleep(11)
+        frame.quit()
+        return
+    except ValueError as e:
+        time.sleep(3)
+        frame.assistant_speaks(str(e))
+        time.sleep(11)
+        frame.quit()
+        return
 
     while True:
         text = get_audio(2)
@@ -30,7 +45,7 @@ def start_listening(frame, token):
                     if should_wake(s.wake_words, text):
                         s.wake_function(frame, text, token)
                         break
-                    if index + 1 == len(services):
+                    if index + 1 == len(services) and last_service is not None:
                         last_service.wake_function(frame, old_text, token)
 
             except Exception as e:

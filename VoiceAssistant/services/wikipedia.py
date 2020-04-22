@@ -4,6 +4,7 @@ from services import json_parser
 from selenium import webdriver
 import re
 import threading
+from UI.main import isLinux
 
 
 def is_wikipedia_page_exist(search_phrase):
@@ -21,7 +22,10 @@ def is_wikipedia_page_exist(search_phrase):
 
 
 def search_in_google(search_phrase):
-    driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver80.1.exe")
+    if isLinux:
+        driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver")
+    else:
+        driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver.exe")
     driver.maximize_window()
     driver.get("https://www.google.pl/")
     json_parser.parse_json(".././json_files/google.json", driver, search_phrase)
@@ -53,5 +57,9 @@ def search_in_wikipedia(search_phrase):
             return "Oto wyniki wyszukiwania w google"
 
 
-def wikipedia_wake_function(frame, old_text, *rest):
+def get_wake_words():
+    return []
+
+
+def wake_function(frame, old_text, *rest):
     frame.assistant_speaks(search_in_wikipedia(old_text))

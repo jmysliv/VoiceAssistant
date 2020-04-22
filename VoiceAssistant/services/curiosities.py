@@ -55,5 +55,9 @@ def get_random_curio():
     return curiosities[index]
 
 
+def get_wake_words():
+    return ["ciekawostki", "ciekawego", "ciekawostka", "ciekawostkę"]
+
+
 def wake_function(frame, *rest):
     frame.assistant_speaks(get_random_curio()['curio'])

@@ -80,23 +80,24 @@ Find the appropriate .whl file that matches your Python version (you can check y
 ```
 
 #### Install Chrome webdriver 
-This webdriver must be installed for the correct work of the voice assistant.  
-Choose the webdriver specific for your Chrome browser version from this [link](https://chromedriver.chromium.org/downloads).    
-If you have some problem with find your Chrome Browser version number this [link](https://help.zenplanner.com/hc/en-us/articles/204253654-How-to-Find-Your-Internet-Browser-Version-Number-Google-Chrome) will help you.    
-Next extract downloaded webdriver to [driver folder](VoiceAssistant/driver) and make sure that filename is "webdriver"
+  
+You can find and download the Chrome webdriver from:
+https://chromedriver.chromium.org/downloads. Make sure it's appropriate for your Chrome Browser version. If you don't know your Chrome Browser version this [link](https://help.zenplanner.com/hc/en-us/articles/204253654-How-to-Find-Your-Internet-Browser-Version-Number-Google-Chrome) might be helpful.    
+Once you donloaded your driver, unzip it to [driver folder](VoiceAssistant/drivers) and make sure that filename is "chromedriver" ("chromedriver.exe" if you are using Windows).
 
 
 ## Adding new features
 *If you enjoy idea of our project and you want to develop it, here is simple guide how to add new feature to our assistant.*
 
-You have to create new Service class object, init function takes two arguments:
+You have to create new Python file in [services module](VoiceAssistant/services). Besides of implementation of your service, you should place inside your file two functions:
 
-1. ```wake_words``` is the array of phrases that you want the assistant to recognize, that will trigger execution of what you want your service to do. Note that all phrases should be lowercase. For example if you writing service for food ordering it could be something like that:
+1. ```get_wake_words()``` it should return the array of phrases that you want the assistant to recognize, that will trigger execution of what you want your service to do. Note that all phrases should be lowercase. Also make sure, that your wake words are unique and any of them isn't used by different service. For example if you writing service for food ordering, your function could look like that:
 ```python
-    wake_words = ["zamów jedzenie", "chce coś zjeść"]
+    def get_wake_words():
+        return ["zamów jedzenie", "chce coś zjeść"]
 ```
 
-2. ```wake_function``` is the function that will execute after assistant recognize one of your ```wake_words```. It takes three arguments:
+2. ```wake_function(frame, text, token)``` is the function that will execute after assistant recognize one of your ```wake_words```. It takes three arguments:
 
     * ```frame``` that is responsible for what you see on the screen and what the assistant says. You can use the following functions:
 
@@ -112,19 +113,15 @@ You have to create new Service class object, init function takes two arguments:
     For example if you writing service for food ordering your wake function could look like that:
     ```python
         def wake_function(frame, text, token):
-            frame.assistant_says("Co chcesz zjeść?")
+            frame.assistant_speaks("Co chcesz zjeść?")
             food = get_audio(5)
             while food == "":
                 frame.assistant_doesnt_understand()
                 food = get_audio(5)
             frame.user_speaks(food)
             order_food(food) #function that orders food
-            frame.assistant_saya("Zamówione")
+            frame.assistant_speaks("Zamówione")
     ```
-Once you have ```wake_words``` and ```wake_function``` defined, you can create Service object and append it to services list in ```create_services``` function inside [service.py](VoiceAssistant/service.py) file:
-```python
-    services.append(Service(wake_words, wake_function))
-```
 
 *Note that if you need to recognize some additional speech in your service you need to import ```get_audio```, that takes one argument which is timeout in seconds*
 ```python

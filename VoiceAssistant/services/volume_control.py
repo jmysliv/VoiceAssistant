@@ -1,5 +1,9 @@
 import ctypes
-import wmi
+import time
+from command_manager import get_audio
+from UI.main import isLinux
+if isLinux:
+    import alsaaudio
 
 
 SendInput = ctypes.windll.user32.SendInput
@@ -92,6 +96,22 @@ def set_volume(volume):
         volume_up()
 
 
-def set_brightness(brightness):
-    wmi.WMI(namespace='wmi').WmiMonitorBrightnessMethods()[0].WmiSetBrightness(brightness, 0)
+def get_wake_words():
+    return ["głośność", "przycisz", "podgłośni", "dźwięk"]
+
+
+def wake_function(frame, *rest):
+    frame.assistant_speaks("Na ile mam ustawić głośności?")
+    time.sleep(1.5)
+    volume = get_audio(5)
+    while volume == "":
+        frame.assistant_doesnt_understand()
+        volume = get_audio(5)
+    frame.user_speaks(volume)
+    if isLinux:
+        m = alsaaudio.Mixer()
+        m.setvolume(int(volume))
+    else:
+        set_volume(int(volume))
+    frame.assistant_speaks("Zrobione")
 

@@ -42,6 +42,10 @@ def get_random_joke():
     return jokes[index]
 
 
+def get_wake_words():
+    return ["suchar", "żart", "dowcip"]
+
+
 def wake_function(frame, *rest):
     if len(jokes) == 0:
         frame.assistant_speaks("Chwileczkę...")

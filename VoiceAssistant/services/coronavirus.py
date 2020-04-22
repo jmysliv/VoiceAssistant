@@ -39,7 +39,11 @@ def get_data_about_corona(text):
         return "Niestety nie udało się znaleźć informacji dla podanego kraju"
 
 
-def coronavirus_wake_function(frame, *rest):
+def get_wake_words():
+    return ["koronawirus", "koronawirusie", "korona wirusie", "korona wirus", "koronawirusa"]
+
+
+def wake_function(frame, *rest):
     frame.assistant_speaks("Podaj kraj dla którego chciałbyś otrzymać informacje ?")
     time.sleep(1.5)
     country_name = get_audio(5)
