@@ -8,6 +8,7 @@ def speak(text):
     text = text.rstrip("\n")
     try:
         engine = pyttsx3.init()
+        engine.setProperty('voice', "polish")
         engine.say(text)
         engine.runAndWait()
     except RuntimeError:
