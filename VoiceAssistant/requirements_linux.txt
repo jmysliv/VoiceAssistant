@@ -8,6 +8,7 @@ googletrans==2.4.0
 idna==2.9
 pyalsaaudio==0.8.4
 PyAudio==0.2.11
+pystempel==1.1.0
 pyttsx3==2.87
 requests==2.23.0
 selenium==3.141.0

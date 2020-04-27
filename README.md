@@ -45,15 +45,13 @@ First thing you have to do is to clone this repository, type the following comma
 All necessary libraries and packages are in file [requirements_windows.txt](VoiceAssistant/requirements_windows.txt) for windows operating system and in  [requirements_linux.txt](VoiceAssistant/requirements_linux.txt) for Linux.  
 Before running command below make sure that you have installed Python 3.7+. :snake: 
 
-#### Windows :poop:
+##### Windows :poop:
 ```bash
     cd VoiceAssistant
     python -m venv venv
     source venv/Scripts/activate
     pip install -r requirements_windows.txt
     pipwin install pyaudio
-    cd UI
-    ../venv/Scripts/python main.py
 ```
 Sometimes when you try to install pyaudio using pipwin, some errors may occur. If that happens you have to install pyaudio using .whl file which you can download it from:
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
@@ -65,22 +63,29 @@ Find the appropriate .whl file that matches your Python version (you can check y
     ../venv/Scripts/python main.py
 ```
 
-#### Linux :ok_hand:
+##### Linux :ok_hand:
 ```bash
     cd VoiceAssistant
     bash install_requirements_ubuntu.sh
 ```
-##### Run app 
-```bash
-    cd UI
-    ../venv/bin/python3 main.py
-```
 
-#### Install Chrome webdriver 
+### Install Chrome webdriver 
   
 You can find and download the Chrome webdriver from:
 https://chromedriver.chromium.org/downloads. Make sure it's appropriate for your Chrome Browser version. If you don't know your Chrome Browser version this [link](https://help.zenplanner.com/hc/en-us/articles/204253654-How-to-Find-Your-Internet-Browser-Version-Number-Google-Chrome) might be helpful.    
 Once you donloaded your driver, unzip it to [driver folder](VoiceAssistant/drivers) and make sure that filename is "chromedriver" ("chromedriver.exe" if you are using Windows).
+
+### Run assistant
+##### Linux
+```bash
+    cd UI
+    ../venv/bin/python3 main.py
+```
+##### Windows
+```bash
+    cd UI
+    ../venv/Scripts/python main.py
+```
 
 
 ## Adding new features

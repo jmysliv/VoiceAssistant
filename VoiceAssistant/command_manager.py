@@ -1,11 +1,14 @@
 from speech.speech_recognizer import get_audio
 import service
 import time
+from stempel import StempelStemmer
+stemmer = StempelStemmer.polimorf()
 
 
 def should_wake(wake_arr, text):
+    stemmed_text = stemmer.stem(text)
     for wake in wake_arr:
-        if wake in text:
+        if stemmer.stem(wake) in stemmed_text:
             return True
     return False
 
