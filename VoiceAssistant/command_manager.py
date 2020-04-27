@@ -1,11 +1,12 @@
 from speech.speech_recognizer import get_audio
 import service
 import time
+from UI.main import stemmer
 
 
 def should_wake(wake_arr, text):
-    for wake in wake_arr:
-        if wake in text:
+    for word in text:
+        if (stemmer.stem(word)) in wake_arr:
             return True
     return False
 
@@ -42,7 +43,7 @@ def start_listening(frame, token):
             text = text.lower()
             try:
                 for index, s in enumerate(services):
-                    if should_wake(s.wake_words, text):
+                    if should_wake(s.wake_words, text.split()):
                         s.wake_function(frame, text, token)
                         break
                     if index + 1 == len(services) and last_service is not None:

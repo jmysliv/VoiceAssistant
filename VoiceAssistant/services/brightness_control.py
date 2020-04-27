@@ -4,6 +4,8 @@ from UI.main import isLinux
 if isLinux:
     import os
 else:
+    import pythoncom
+    pythoncom.CoInitialize()
     import wmi
 
 
