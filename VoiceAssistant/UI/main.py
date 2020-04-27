@@ -13,6 +13,8 @@ import threading
 from UI.HomePage.home_page_layout import HomePage
 from UI.Login.login_layout import LoginPage
 from UI.Register.resgister_layout import RegisterPage
+from stempel import StempelStemmer
+stemmer = StempelStemmer.polimorf()
 
 
 class Main(tk.Tk):
