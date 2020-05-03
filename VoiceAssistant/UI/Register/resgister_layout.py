@@ -6,7 +6,7 @@ class RegisterPage(tk.Frame):
 
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-
+        self.controller = controller
         self.label_username = tk.Label(self, text="Username")
         self.label_email = tk.Label(self, text="Email")
         self.label_password = tk.Label(self, text="Password")
@@ -58,4 +58,4 @@ class RegisterPage(tk.Frame):
                 self.message.config(text=response, fg="red")
             else:
                 self.message.config(text="Konto utworzone", fg="green")
-
+                self.message.after(1500, lambda: {self.message.destroy(), self.controller.show_frame("LoginPage")})
