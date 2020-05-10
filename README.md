@@ -56,11 +56,9 @@ Before running command below make sure that you have installed Python 3.7+. :sna
 Sometimes when you try to install pyaudio using pipwin, some errors may occur. If that happens you have to install pyaudio using .whl file which you can download it from:
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#pyaudio
 
-Find the appropriate .whl file that matches your Python version (you can check your python version using ```python --version```) and put it in the directory where VoiceAssistant is located. Then you can install pyaudio using pip and run our assistant:
+Find the appropriate .whl file that matches your Python version (you can check your python version using ```python --version```) and put it in the directory where VoiceAssistant is located. Then you can install pyaudio using pip:
 ```bash
     pip install <name of your .whl file>.whl
-    cd UI
-    ../venv/Scripts/python main.py
 ```
 
 ##### Linux :ok_hand:
@@ -138,13 +136,21 @@ If you finished adding your service don't hesitate to make a pull request. Also 
 *At the beginning you have to wake your assistant, you can do it by saying **"Janusz"**,* 
 *this word mobilizes the assistant to act, and the assistant is waiting for your command to execute from now on.*
 ### Telling jokes <a id="joke"></a> :joy:
+You can ask assistant to tell a joke, but in your command you should put one of the following words (You can change inflection tip as you like):
 ```
-    wake_words = ["suchar", "suchar", "żart", "dowcip"]
+"suchar", "żart", "dowcip"
 ```
+For example, you could say something like this:
+
+![demo](gifs/1.gif)
 ### Finding curiosities <a id="curiosities"></a> :mortar_board:
+You can ask assistant to find some curiosities, but in your command you should put one of the following words (You can change inflection tip as you like):
 ```
-    wake_words = ["ciekawostki", "ciekawego", "ciekawostki", "ciekawostka", "ciekawostkę"]
+"ciekawostki", "ciekawego", "ciekawostka"
 ```
+For instance, you could say something like this:
+
+![demo](gifs/2.gif)
 ### Playing YouTube videos <a id="yt"></a>  :tv:
 ```
     wake_words = ["uruchom", "włącz", "puść"]
