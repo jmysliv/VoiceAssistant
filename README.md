@@ -142,7 +142,7 @@ You can ask assistant to tell a joke, but in your command you should put one of 
 ```
 For example, you could say something like this:
 
-![demo](gifs/1.gif)
+![demo](https://github.com/jmysliv/VoiceAssistant/blob/gifs/gifs/1.gif)
 ### Finding curiosities <a id="curiosities"></a> :mortar_board:
 You can ask assistant to find some curiosities, but in your command you should put one of the following words (You can change inflection tip as you like):
 ```
@@ -150,7 +150,7 @@ You can ask assistant to find some curiosities, but in your command you should p
 ```
 For instance, you could say something like this:
 
-![demo](gifs/2.gif)
+![demo](https://github.com/jmysliv/VoiceAssistant/blob/gifs/gifs/2.gif)
 ### Playing YouTube videos <a id="yt"></a>  :tv:
 ```
     wake_words = ["uruchom", "włącz", "puść"]
