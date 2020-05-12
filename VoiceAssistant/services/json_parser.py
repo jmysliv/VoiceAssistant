@@ -50,6 +50,6 @@ def wake_function(frame, text, *rest):
         driver = webdriver.Chrome(executable_path=r".././drivers/chromedriver.exe")
     driver.maximize_window()
     driver.get("https://www.youtube.com/?hl=pl&gl=PL")
-    parse_json(".././json_files/yt.json", driver, text.replace('uruchom', '').upper())
+    parse_json(".././json_files/yt.json", driver, text.replace('uruchom', '').replace('puść', '').replace('włącz', '').upper())
 
 

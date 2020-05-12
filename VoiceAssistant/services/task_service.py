@@ -83,9 +83,9 @@ def mark_task_as_done(token, id):
     if response.status_code != 200:
         return "Nie udało się zaktualizować zadania"
 
-    data = {'task_name': response.json()['name'],
+    data = {'task_name': response.json()['task_name'],
             'is_done': True}
-    response = requests.post(API_ENDPOINT + str(id) + "/", data=data, headers=headers)
+    response = requests.put(API_ENDPOINT + str(id) + "/", data=data, headers=headers)
     if response.status_code == 200:
         return "Zaktualizowano zadanie"
     else:
@@ -93,7 +93,7 @@ def mark_task_as_done(token, id):
 
 
 def get_wake_words():
-    return ["pokaż co zrobiłem", "pokaż zrobione zadania", "co zrobiłem", "co już zrobiłem"]
+    return ["co zrobiłem", "przeszłe zadania"]
 
 
 def wake_function(frame, text, token):
