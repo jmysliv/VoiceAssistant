@@ -32,7 +32,8 @@ def parse_inbox_messages(response, read):
 
 def send_message(receiver, content, token):
     data = {'receiver': receiver,
-            'content': content}
+            'content': content,
+            'date': datetime.datetime.now()}
     headers = {'Authorization': 'Token ' + token}
     response = requests.post(API_ENDPOINT, data=data, headers=headers)
     if response.status_code == 201:
@@ -69,7 +70,9 @@ def show_read_messages(token):
 
 
 def mark_message_as_read(token, id):
-    data = {'is_read': True}
+    data = {'is_read': True,
+            'receiver': 'receiver',
+            'content': 'content'}       # receiver and content doesnt matters, but they are required to be validated
     headers = {'Authorization': 'Token ' + token}
     response = requests.put(API_ENDPOINT + str(id) + '/', data=data, headers=headers)
     if response.status_code == 200:
@@ -79,7 +82,7 @@ def mark_message_as_read(token, id):
 
 
 def get_wake_words():
-    return ["pokaż wysłane wiadomości", "pokaż wiadomości które wysłałem"]
+    return ["pokaż wiadomości", "pokaż wiadomości które wysłałem"]
 
 
 def wake_function(frame, text, token):

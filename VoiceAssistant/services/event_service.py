@@ -68,8 +68,7 @@ def show_events(token):
 
 
 def get_wake_words():
-    return ["pokaż wydarzenia", "wyświetl wydarzenia", "jakie mam wydarzenia", "co mam zaplanowane",
-            "co mam w planach"]
+    return ["pokaż wydarzenia", "wyświetl wydarzenia", "jakie mam wydarzenia", "co mam zaplanowane", "co mam w planach"]
 
 
 def wake_function(frame, text, token):

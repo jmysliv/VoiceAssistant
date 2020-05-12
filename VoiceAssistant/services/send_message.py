@@ -19,4 +19,4 @@ def wake_function(frame, text, token):
         frame.assistant_doesnt_understand()
         content = get_audio(5)
     frame.user_speaks(content)
-    frame.assistant_speaks(send_message(receiver, content, token))
+    frame.assistant_speaks(send_message(receiver.lower(), content, token))

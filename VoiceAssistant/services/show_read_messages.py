@@ -2,7 +2,7 @@ from services.message_service import show_read_messages
 
 
 def get_wake_words():
-    return ["pokaż przeczytane wiadomości", "pokaż stare wiadomości"]
+    return ["pokaż stare wiadomości"]
 
 
 def wake_function(frame, text, token):

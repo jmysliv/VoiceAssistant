@@ -12,4 +12,5 @@ def wake_function(frame, text, token):
     while message_id == "":
         frame.assistant_doesnt_understand()
         message_id = get_audio(5)
+    frame.user_speaks(message_id)
     frame.assistant_speaks(mark_message_as_read(token, int(message_id)))
