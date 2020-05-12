@@ -152,9 +152,14 @@ For instance, you could say something like this:
 
 ![demo](gifs/2.gif)
 ### Playing YouTube videos <a id="yt"></a>  :tv:
+Assistant can help you play YouTube videos as well. All you have to do is to use one of the following word, and then say name of the video
 ```
-    wake_words = ["uruchom", "włącz", "puść"]
+"uruchom", "włącz", "puść"
 ```
+
+For example, your command could look like this:
+
+#TODO
 ### Checking current COVID-19 data <a id="covid"></a> :skull:
 Our assistant helps you being up to date with coronavirus news. To get latest news put in your command one of the following words (You can change inflection tip as you like):
 ```
@@ -164,27 +169,80 @@ For instance, you could say something like this:
 
 ![demo](gifs/3.gif)
 ### Planning events  <a id="events"></a> :date:
+You can also tell assistant information about events, which you want him to remember. You can add new event by saying:
 ```
-    wake_words = ["dodaj wydarzenie", "dodaj nowe wydarzenie", "zaplanuj wydarzenie", "pokaż wydarzenia", "wyświetl wydarzenia",  
-     "jakie mam wydarzenia", "co mam zaplanowane", "co mam w planach"]
+"dodaj wydarzenie", "dodaj nowe wydarzenie", "zaplanuj wydarzenie"
 ```
+If you want to check, what events you have planned, simply say:
+```
+"pokaż wydarzenia", "wyświetl wydarzenia", "jakie mam wydarzenia", "co mam zaplanowane", "co mam w planach"
+```
+
+Here is example, how interaction with our assistant could look like:
+
+![demo](gifs/6.gif)
+
 ### Sending and receiving messages with other users  <a id="message"></a> :incoming_envelope:
+Our assistant allows his users to communicate with each other. If you want to send message to other user, you have to say:
 ```
-    wake_words = ["wyślij wiadomość", "napisz wiadomość", "pokaż wysłane wiadomości", "pokaż wiadomości które wysłałem", 
-    "pokaż przeczytane wiadomości", "pokaż stare wiadomości" "pokaż skrzynkę odbiorczą", "mam jakieś nowę wiadomości",
-    "pokaż nowe wiadomości", "oznacz wiadomość jako przeczytaną", "przeczytałem wiadomość"]
+"wyślij wiadomość", "napisz wiadomość"
 ```
+After you send message, you probably want to check if the receiver read your message. All you have to do is to use one of the following command:
+```
+"pokaż wiadomości", "pokaż wiadomości które wysłałem"
+```
+To check if somebody sent you a message, you should say:
+```
+"pokaż skrzynkę odbiorczą", "pokaż nowe wiadomości"
+```
+If you want to let sender know that you read the content, tell assistant one of the following phrase:
+```
+"oznacz wiadomość jako przeczytaną", "przeczytałem wiadomość"
+```
+To see old messages, use the following command:
+```
+"pokaż stare wiadomości"
+```
+
+Here is example, how such interaction with our assistant could look like:
+
+![demo](gifs/7.gif)
+
+![demo](gifs/8.gif)
+
 ### Planning tasks  <a id="tasks"></a> :calendar:
+Assistant makes sure that the user doesn't forget anything and let him stores information about tasks. User can add new task by saying:
+
 ```
-    wake_words = ["pokaż zadania do wykonania", "pokaż niezrobione zadania", "pokaż co mam do zrobienia", "co mam zrobić", 
-    "co jest do zrobienia", "pokaż co zrobiłem", "pokaż zrobione zadania", "co zrobiłem", "co już zrobiłem",  
-    "dodaj zadanie do zrobionych", "oznacz zadanie jako zrobione", "przenieś zadanie do zrobionych", 
-    "zrobiłem zadanie", "wykonałem zadanie"]
+"dodaj zadanie", "zaplanuj zadanie", "dodaj rzecz do zrobienia"
 ```
+To see list of things to do, you need to say:
+```
+"zadania do wykonania", "niezrobione zadania", "co mam zrobić", "co jest do zrobienia"
+```
+You can also let assistant knows that you finished some task. For that use one of the following commands:
+```
+"oznacz zadanie jako zrobione", "zrobiłem zadanie", "wykonałem zadanie"
+```
+If you want to see a list of completed tasks, simply say:
+```
+"co zrobiłem", "przeszłe zadania"
+```
+
+Here you can find an example:
+
+![demo](gifs/5.gif)
+
 ### Changing volume  <a id="volume"></a> :mute:
+To change volume at your computer use one of the following commands:
 ```
-    wake_words = ["głośność", "przycisz", "podgłośni", "dźwięk"]
+ "głośność", "przycisz", "podgłośni", "dźwięk"
 ```
+
+For example, you could say something like this:
+
+#TODO
+
 ### Checking current weather  <a id="weather"></a> :cloud:
 If you want to check the current weather, you can ask your assistant. Remember to include the name of the city or country in which you want to check the weather, as well as one of the following words in the command:
 ```
@@ -195,12 +253,24 @@ For example, your command could look like this:
 ![demo](gifs/4.gif)
 
 ### Changing brightness of the screen <a id="brightness"></a> :high_brightness:
+To change brightness of your computer screen, use one of the following command:
 ```
-    wake_words = ["jasność", "kontrast"]
+ "jasność", "kontrast"
 ```
+
+Here is an example of use:
+
+#TODO
+
 ### Searching phrase in both Wikipedia and Google <a id="wiki"></a> :mag_right:
-```
-    wake_words = []
-```
-*If the given command doesn't match any of the above wake words, the given phrase will be searched in Wikipedia and the search results will be read by assistant,
-if it still gives unsuccessful result the command will be searched in Google and results will be displayed in the browser.*
+
+If the given command doesn't match any of the above wake words, the given phrase will be searched in Wikipedia and the search results will be read by assistant,
+if it still gives unsuccessful result the command will be searched in Google and results will be displayed in the browser.
+
+That feature allows user to search information about something. Here is an example of getting information from Wikipedia:
+
+![demo](gifs/9.gif)
+
+Here is an example of getting information from Google:
+
+#TODO
