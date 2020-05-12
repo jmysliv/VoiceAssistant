@@ -159,7 +159,7 @@ Assistant can help you play YouTube videos as well. All you have to do is to use
 
 For example, your command could look like this:
 
-#TODO
+![demo](gifs/12.gif)
 ### Checking current COVID-19 data <a id="covid"></a> :skull:
 Our assistant helps you being up to date with coronavirus news. To get latest news put in your command one of the following words (You can change inflection tip as you like):
 ```
@@ -241,7 +241,7 @@ To change volume at your computer use one of the following commands:
 
 For example, you could say something like this:
 
-#TODO
+![demo](gifs/10.gif)
 
 ### Checking current weather  <a id="weather"></a> :cloud:
 If you want to check the current weather, you can ask your assistant. Remember to include the name of the city or country in which you want to check the weather, as well as one of the following words in the command:
@@ -260,7 +260,7 @@ To change brightness of your computer screen, use one of the following command:
 
 Here is an example of use:
 
-#TODO
+![demo](gifs/13.gif)
 
 ### Searching phrase in both Wikipedia and Google <a id="wiki"></a> :mag_right:
 
@@ -273,4 +273,4 @@ That feature allows user to search information about something. Here is an examp
 
 Here is an example of getting information from Google:
 
-#TODO
+![demo](gifs/11.gif)
