@@ -142,7 +142,7 @@ You can ask assistant to tell a joke, but in your command you should put one of 
 ```
 For example, you could say something like this:
 
-![demo](https://github.com/jmysliv/VoiceAssistant/blob/gifs/gifs/1.gif)
+![demo](gifs/1.gif)
 ### Finding curiosities <a id="curiosities"></a> :mortar_board:
 You can ask assistant to find some curiosities, but in your command you should put one of the following words (You can change inflection tip as you like):
 ```
@@ -150,15 +150,19 @@ You can ask assistant to find some curiosities, but in your command you should p
 ```
 For instance, you could say something like this:
 
-![demo](https://github.com/jmysliv/VoiceAssistant/blob/gifs/gifs/2.gif)
+![demo](gifs/2.gif)
 ### Playing YouTube videos <a id="yt"></a>  :tv:
 ```
     wake_words = ["uruchom", "włącz", "puść"]
 ```
 ### Checking current COVID-19 data <a id="covid"></a> :skull:
+Our assistant helps you being up to date with coronavirus news. To get latest news put in your command one of the following words (You can change inflection tip as you like):
 ```
-    wake_words = ["koronawirus", "koronawirusie", "korona wirusie", "korona wirus", "koronawirusa"]
+"koronawirus", "korona wirus"
 ```
+For instance, you could say something like this:
+
+![demo](gifs/3.gif)
 ### Planning events  <a id="events"></a> :date:
 ```
     wake_words = ["dodaj wydarzenie", "dodaj nowe wydarzenie", "zaplanuj wydarzenie", "pokaż wydarzenia", "wyświetl wydarzenia",  
@@ -182,9 +186,14 @@ For instance, you could say something like this:
     wake_words = ["głośność", "przycisz", "podgłośni", "dźwięk"]
 ```
 ### Checking current weather  <a id="weather"></a> :cloud:
+If you want to check the current weather, you can ask your assistant. Remember to include the name of the city or country in which you want to check the weather, as well as one of the following words in the command:
 ```
-    wake_words = ["pogoda"]
+"pogoda"
 ```
+For example, your command could look like this:
+
+![demo](gifs/4.gif)
+
 ### Changing brightness of the screen <a id="brightness"></a> :high_brightness:
 ```
     wake_words = ["jasność", "kontrast"]

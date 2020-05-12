@@ -40,7 +40,7 @@ def get_data_about_corona(text):
 
 
 def get_wake_words():
-    return ["koronawirus", "koronawirusie", "korona wirusie", "korona wirus", "koronawirusa"]
+    return ["koronawirus", "korona wirus"]
 
 
 def wake_function(frame, *rest):

@@ -5,13 +5,8 @@ from UI.main import stemmer
 
 
 def should_wake(wake_arr, text):
-    text_array = text.split(" ")
-    stemmed_text = []
-    for word in text_array:
-        stemmed_text.append(stemmer.stem(word))
-    print(stemmed_text)
+    stemmed_text = stemmer.stem(text)
     for wake in wake_arr:
-        print(stemmer.stem(wake))
         if (stemmer.stem(wake)) in stemmed_text:
             return True
     return False
