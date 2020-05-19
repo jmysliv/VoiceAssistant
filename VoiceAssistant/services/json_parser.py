@@ -9,11 +9,6 @@ import json
 from UI.main import isLinux
 
 
-def wait_to_end(s):
-    tmp = s.split(':')
-    # time.sleep(int(tmp[0]) * 60 + int(tmp[1]) + 1)
-
-
 def parse_json(json_path, driver, search):
 
     with open(json_path, 'r') as f:

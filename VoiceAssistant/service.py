@@ -14,8 +14,6 @@ def check_wake_words_uniqueness(services):
     for service in services:
         for wake_word in service.wake_words:
             if wake_word in words:
-                print(words)
-                print(wake_word)
                 return False
             else:
                 words[wake_word] = 1

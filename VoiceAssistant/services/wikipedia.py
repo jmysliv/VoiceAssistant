@@ -7,7 +7,7 @@ import threading
 from UI.main import isLinux
 
 
-def is_wikipedia_page_exist(search_phrase):
+def check_wikipedia_page(search_phrase):
     search = search_phrase.replace(" ", "_")
     response = requests.get('https://pl.wikipedia.org/wiki/' + search)
     content = response.text
@@ -32,7 +32,7 @@ def search_in_google(search_phrase):
 
 
 def search_in_wikipedia(search_phrase):
-    if not is_wikipedia_page_exist(search_phrase):
+    if not check_wikipedia_page(search_phrase):
         threading.Thread(target=search_in_google, args=([search_phrase]), daemon=True).start()
         return "Oto wyniki wyszukiwania w google"
     else:

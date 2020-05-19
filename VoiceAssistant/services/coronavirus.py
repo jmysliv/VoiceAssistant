@@ -12,7 +12,7 @@ def num_to_month(num):
     return country[0]['month_name']
 
 
-def get_data_about_corona(text):
+def get_covid_data(text):
     with open('.././json_files/countries.json', 'r') as f:
         countries = json.loads(f.read())
     try:
@@ -51,4 +51,4 @@ def wake_function(frame, *rest):
         frame.assistant_doesnt_understand()
         country_name = get_audio(5)
     frame.user_speaks(country_name)
-    frame.assistant_speaks(get_data_about_corona(country_name))
+    frame.assistant_speaks(get_covid_data(country_name))
