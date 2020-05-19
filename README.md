@@ -36,7 +36,7 @@ While working on the project we learned how to properly configure python virtual
 
 First thing you have to do is to clone this repository, type the following commands in your terminal:
 ```bash
-    git clone git@github.com:jmysliv/VoiceAssistant.git
+    git clone https://github.com/jmysliv/VoiceAssistant.git
     cd VoiceAssistant
 ```
 
@@ -46,10 +46,10 @@ All necessary libraries and packages are in file [requirements_windows.txt](Voic
 Before running command below make sure that you have installed Python 3.7+. :snake: 
 
 ##### Windows :poop:
-```bash
+```Windows
     cd VoiceAssistant
     python -m venv venv
-    source venv/Scripts/activate
+    call venv\Scripts\activate.bat
     pip install -r requirements_windows.txt
     pipwin install pyaudio
 ```
@@ -80,9 +80,9 @@ Once you donloaded your driver, unzip it to [driver folder](VoiceAssistant/drive
     ../venv/bin/python3 main.py
 ```
 ##### Windows
-```bash
+```Windows
     cd UI
-    ../venv/Scripts/python main.py
+    call .\..\venv\Scripts\python main.py
 ```
 
 
