@@ -4,8 +4,13 @@ Voice Assistant :information_desk_person::sound:
 
 ## Team :punch:
 
-+ [Jakub Myśliwiec](https://github.com/jmysliv):airplane::bomb:
-+ [Sebastian Kuśnierz](https://github.com/skusnierz) :fire:
+<table align="center">
+  <tr>
+    <td align="center"><a href="https://github.com/jmysliv"><img src="https://avatars1.githubusercontent.com/u/48885911?s=460&v=4" width="100px;" alt=""/><br /><sub><b>Jakub Myśliwiec</b></sub></a></td>
+   <td align="center"><a href="https://github.com/skusnierz"><img src="https://avatars2.githubusercontent.com/u/47144579?s=460&v=4" width="100px;" alt=""/><br /><sub><b>Sebastian Kuśnierz</b></sub></a></td>
+    </tr>
+</table
+
 
 ## About Project :question:
 
@@ -42,7 +47,7 @@ First thing you have to do is to clone this repository, type the following comma
 
 
 ### Install requirements :mega:
-All necessary libraries and packages are in file [requirements_windows.txt](VoiceAssistant/requirements_windows.txt) for windows operating system and in  [requirements_linux.txt](VoiceAssistant/requirements_linux.txt) for Linux.  
+All necessary libraries and packages are in file [requirements_windows.txt](VoiceAssistant/requirements/requirements_windows.txt) for windows operating system and in  [requirements_linux.txt](VoiceAssistant/requirements/requirements_linux.txt) for Linux.  
 Before running command below make sure that you have installed Python 3.7+. :snake: 
 
 ##### Windows :poop:
@@ -50,7 +55,7 @@ Before running command below make sure that you have installed Python 3.7+. :sna
     cd VoiceAssistant
     python -m venv venv
     call venv\Scripts\activate.bat
-    pip install -r requirements_windows.txt
+    pip install -r requirements\requirements_windows.txt
     pipwin install pyaudio
 ```
 Sometimes when you try to install pyaudio using pipwin, some errors may occur. If that happens you have to install pyaudio using .whl file which you can download it from:
@@ -64,7 +69,7 @@ Find the appropriate .whl file that matches your Python version (you can check y
 ##### Linux :ok_hand:
 ```bash
     cd VoiceAssistant
-    bash install_requirements_ubuntu.sh
+    bash requirements/install_requirements_ubuntu.sh
 ```
 
 ### Install Chrome webdriver 
