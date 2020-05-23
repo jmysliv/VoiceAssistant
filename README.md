@@ -2,6 +2,13 @@ Voice Assistant :information_desk_person::sound:
 ===
 *Project created as a part of the subject 'Programming in Python' in AGH University of Science and Technology.*
 
+[![Commit badge](https://img.shields.io/github/last-commit/jmysliv/VoiceAssistant)](https://github.com/jmysliv/VoiceAssistant/commits/master)
+[![Top language](https://img.shields.io/github/languages/top/jmysliv/VoiceAssistant)](https://github.com/jmysliv/VoiceAssistant)
+[![Python 3.7](https://img.shields.io/badge/python-3.7-green.svg)](https://www.python.org/downloads/release/python-370/)
+[![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+[![HitCount](http://hits.dwyl.com/jmysliv/VoiceAssistant.svg)](http://hits.dwyl.com/jmysliv/VoiceAssistant)
+
 ## Team :punch:
 
 <table align="center">
@@ -9,7 +16,7 @@ Voice Assistant :information_desk_person::sound:
     <td align="center"><a href="https://github.com/jmysliv"><img src="https://avatars1.githubusercontent.com/u/48885911?s=460&v=4" width="100px;" alt=""/><br /><sub><b>Jakub Myśliwiec</b></sub></a></td>
    <td align="center"><a href="https://github.com/skusnierz"><img src="https://avatars2.githubusercontent.com/u/47144579?s=460&v=4" width="100px;" alt=""/><br /><sub><b>Sebastian Kuśnierz</b></sub></a></td>
     </tr>
-</table
+</table>
 
 
 ## About Project :question:
