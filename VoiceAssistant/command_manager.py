@@ -58,6 +58,5 @@ def start_listening(frame, token):
 
             except Exception as e:
                 print(e)
-                pass
 
 

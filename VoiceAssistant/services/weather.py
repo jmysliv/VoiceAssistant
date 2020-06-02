@@ -26,9 +26,8 @@ def find_city_in_string(text):
         if len(cities) == 0:
             return None
         return cities[0]
-    except Exception as e:
-        print(e)
-        pass
+    except Exception:
+        return None
 
 
 def find_country_in_string(text):
@@ -39,9 +38,8 @@ def find_country_in_string(text):
         if len(countries) == 0:
             return None
         return countries[0]
-    except Exception as e:
-        print(e)
-        pass
+    except Exception:
+        return None
 
 
 def prepare_weather_string(response):

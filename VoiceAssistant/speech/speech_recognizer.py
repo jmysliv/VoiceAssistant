@@ -1,10 +1,7 @@
 import speech_recognition as sr
 import pyaudio
-from UI.main import isLinux
-if isLinux:
-    default_device_index = pyaudio.PyAudio().get_default_output_device_info()['index']
-else:
-    default_device_index = 0
+
+default_device_index = pyaudio.PyAudio().get_default_input_device_info()['index']
 
 
 def get_audio(timeout, sample_rate=48000, chunk_size=2048):
